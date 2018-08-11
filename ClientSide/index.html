@@ -8,71 +8,92 @@
         <!--<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
         <link rel="stylesheet" href="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/css/pace.flash.css">
         <link rel="stylesheet" href="css/agenda.css"> 
+        <link rel="stylesheet" href="css/nav.css">
         <link rel="stylesheet" href="css/cuadrilla.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/moment.min.js"></script>
         <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>-->
         <script type="text/javascript" src="https://www.prensalibre.com/CMSScripts/jquery/jquery-cookie.js"></script>
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/pace.min.js"></script>
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/mustache.min.js"></script>
     </head>
     <body>
-        <script id="template-card-evento-cuadrilla" type="x-tmpl-mustache">
-            <div class="card-evento-cuadrilla" data-rowNumber="{{rowNumber}}">
-                <div class="internal">
-                    <div class="imagen">
-                        <a href="{{urlEvento}}">
-                            <img src="{{imagenSmall}}" class="full-width">
-                        </a>
-                        {{#hoy}}
-                        <div class="hoy">Hoy</div>
-                        {{/hoy}}
-                    </div>
-                    {{#promocion}}
-                    <div class="contenedor-promocion">
-                        <span class="fas fa-star"></span> Promoción
-                    </div>
-                    {{/promocion}}
-                    <div class="datos-evento">
-                        <a href="{{urlEvento}}" class="fecha-mobile">
-                            <span class="mes-dia">{{fecha.mes.nombre}} {{fecha.dia}}</span> <span class="hora">{{fecha.hora}}:{{fecha.minuto}}</span>
-                        </a>
-                        <div class="info-evento">
-                            <a href="{{urlEvento}}" class="fecha-desk">
-                                <div class="mes-dia">{{fecha.mes.nombre}} {{fecha.dia}}</div>
-                                <div class="hora">{{fecha.hora}}:{{fecha.minuto}}</div>
+        <nav id="nav-agenda">
+            <div id="nav-agenda-wrapper" class="wrapper">
+                <div id="contenedor-logo-agenda">
+                    <a href="/Agenda">
+                        <img id="logo-agenda" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/Agenda-V2.png" />
+                    </a>
+                </div>
+                <div id="contenedor-logo-pl">
+                    <a href="https://www.prensalibre.com/">
+                        <img id="logo-pl" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/Prensa-Libre-logo.png" />
+                    </a>
+                </div>
+                <div id="contenedor-categorias">
+                    
+                </div>
+            </div>
+        </nav>
+        <main id="main-contenedor-agenda">
+            <form>
+                <script id="template-card-evento-cuadrilla" type="x-tmpl-mustache">
+                <div class="card-evento-cuadrilla" data-rowNumber="{{rowNumber}}">
+                    <div class="internal">
+                        <div class="imagen">
+                            <a href="{{urlEvento}}">
+                                <img src="{{imagenSmall}}" class="full-width">
                             </a>
-                            <div class="titulo-resumen">
-                                <a href="{{urlEvento}}">
-                                    <div class="titulo">{{tituloLimited}}</div>
-                                    <div class="resumen">{{resumenLimited}}</div>
-                                </a>
-                            </div>
+                            {{#hoy}}
+                            <div class="hoy">Hoy</div>
+                            {{/hoy}}
                         </div>
-                        <div class="contenedor-compartir">
-                            <span class="opciones-compartir" style="display:none;">
-                                <a href="whatsapp://send?text={{urlEventoCompleta}}" target="_blank">
-                                    <span class="icon icon-whatsapp"></span>
+                        {{#promocion}}
+                        <div class="contenedor-promocion">
+                            <span class="fas fa-star"></span> Promoción
+                        </div>
+                        {{/promocion}}
+                        <div class="datos-evento">
+                            <a href="{{urlEvento}}" class="fecha-mobile">
+                                <span class="mes-dia">{{fechaInicio.mes.nombre}} {{fechaInicio.dia}}</span> <span class="hora-mobile">{{fechaInicio.horaCompleta}}</span>
+                            </a>
+                            <div class="info-evento">
+                                <a href="{{urlEvento}}" class="fecha-desk">
+                                    <div class="dia-semana">{{fechaInicio.diaSemana}}</div>
+                                    <div class="mes-dia">{{fechaInicio.mes.nombre}} {{fechaInicio.dia}}</div>
+                                    <div class="hora-desk">{{fechaInicio.horaCompleta}}</div>
+                                    <!--<div class="hora-desk">{{fechaFinal.horaCompleta}}</div>-->
                                 </a>
-                                <a href="http://www.facebook.com/sharer.php?u={{urlEventoCompleta}}" target="_blank">
-                                    <span class="icon icon-facebook"></span>
-                                </a>
-                                <a href="https://plus.google.com/share?url={{urlEventoCompleta}}" target="_blank">
-                                    <span class="icon icon-googleplus"></span>
-                                </a>
-                                <a href="https://twitter.com/intent/tweet?via=prensa_libre&url={{urlEventoCompleta}}" target="_blank">
-                                    <span class="icon icon-twitter"></span>
-                                </a>
-                            </span>
-                            <span class="fas fa-share-alt"></span>
+                                <div class="titulo-resumen">
+                                    <a href="{{urlEvento}}">
+                                        <div class="titulo">{{tituloLimited}}</div>
+                                        <div class="resumen">{{resumenLimited}}</div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="contenedor-compartir">
+                                <span class="opciones-compartir" style="display:none;">
+                                    <a href="whatsapp://send?text={{urlEventoCompleta}}" target="_blank">
+                                        <span class="icon icon-whatsapp"></span>
+                                    </a>
+                                    <a href="http://www.facebook.com/sharer.php?u={{urlEventoCompleta}}" target="_blank">
+                                        <span class="icon icon-facebook"></span>
+                                    </a>
+                                    <a href="https://plus.google.com/share?url={{urlEventoCompleta}}" target="_blank">
+                                        <span class="icon icon-googleplus"></span>
+                                    </a>
+                                    <a href="https://twitter.com/intent/tweet?via=prensa_libre&url={{urlEventoCompleta}}" target="_blank">
+                                        <span class="icon icon-twitter"></span>
+                                    </a>
+                                </span>
+                                <span class="fas fa-share-alt"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </script>
-        <main>
-            <form>
+            </script>
                 <div id="contenedor-mayor-modulo-eventos" class="full-width">
                     <div id="contenedor-cards-eventos" class="wrapper">
                         <div id="wrapper-cards-eventos">

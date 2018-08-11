@@ -1,15 +1,16 @@
 #wrapper-cards-eventos { display:flex; flex-direction:row; flex-wrap:wrap; padding-bottom:15px; }
 .card-evento-cuadrilla { width:50.0%; padding:5px 5px; margin-top:15px; }
-.card-evento-cuadrilla .internal { background-color:#FFF; }
+.card-evento-cuadrilla .internal { background-color:#FFF; min-height:270px; }
 .card-evento-cuadrilla .internal:hover { box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 .card-evento-cuadrilla .imagen { position:relative; }
 .card-evento-cuadrilla .hoy { position:absolute; color:#FFF; top:0; right:0; background-color:#4783b2; padding:2px 6px; font-size:12px; }
 .card-evento-cuadrilla .contenedor-promocion { background-color:#FF6B4B; color:#FFF; padding:3px 5px; font-size:10px; } 
 .card-evento-cuadrilla .datos-evento { padding:10px 5px; }
-.card-evento-cuadrilla .fecha-mobile { display:block; color:#757575; font-size:14px; }
+.card-evento-cuadrilla .fecha-mobile { display:block; color:#757575; font-size:11px; }
+.card-evento-cuadrilla .hora-mobile { float:right; }
 .card-evento-cuadrilla .mes-dia { font-weight:bold; }
 .card-evento-cuadrilla .info-evento { display:flex; flex-direction:row; }
-.card-evento-cuadrilla .fecha-desk { display:none; width:0%; color:#757575; font-size:21px; }
+.card-evento-cuadrilla .fecha-desk { display:none; width:0%; }
 .card-evento-cuadrilla .titulo-resumen { width:100%; }
 .card-evento-cuadrilla .titulo { color:#4783b2; font-weight:bold; font-size:15px; margin-top:5px; }
 .card-evento-cuadrilla .resumen { color:#757575; font-size:12px; margin-top:5px; }
@@ -25,13 +26,15 @@
 @media only screen and (min-width: 768px) 
 {
     .card-evento-cuadrilla { width:33.33%; padding:10px 10px; margin-top:10px; }
+    .card-evento-cuadrilla .internal { min-height:410px; }
     .card-evento-cuadrilla .hoy { font-size:16px; padding:3px 10px; }
     .card-evento-cuadrilla .contenedor-promocion { font-size:15px; padding:5px 10px; } 
     .card-evento-cuadrilla .datos-evento { padding:20px 10px; }
     .card-evento-cuadrilla .fecha-mobile { display:none; }
-    .card-evento-cuadrilla .fecha-desk { display:block; width:25%; text-align:center; }
+    .card-evento-cuadrilla .fecha-desk { display:block; width:25%; text-align:center; color:#757575; font-size:19px; }
+    .card-evento-cuadrilla .hora-desk { font-size:15px; }
     .card-evento-cuadrilla .titulo-resumen { width:75%; }
-    .card-evento-cuadrilla .titulo { font-size:21px; }
+    .card-evento-cuadrilla .titulo { font-size:21px; margin-top:0px; }
     .card-evento-cuadrilla .resumen { font-size:15px; margin-top:5px; }
     .card-evento-cuadrilla .contenedor-compartir { margin-top:10px; }
     .card-evento-cuadrilla .opciones-compartir { font-size:25px; }

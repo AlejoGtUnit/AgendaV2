@@ -15,25 +15,20 @@ var urlsCategorias =
 
 var urlService = "//" + window.location.host + "/TiempoLibreServiceV2";
 if (development)
-    urlService = "//gnw.prensalibre.com/TiempoLibreServiceV2";
+    urlService = "https://gnw.prensalibre.com/TiempoLibreServiceV2";
 
 
 var templateCardEventoCuadrilla = $('#template-card-evento-cuadrilla').html();
 Mustache.parse(templateCardEventoCuadrilla);
 
+obtenerEventos();
+
 $(document).ready(function(){
     console.log("Agenda.js -> Ready!");
     console.log("Development: " + development);
     console.log("UrlService: " + urlService);
-    
-    $("#wrapper-cards-eventos").html("");
-    for (var x=0; x < eventosPorPagina; x++){
-        var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
-        var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, ObtenerUnidadDeInformacion(x+1));
-        $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
-    }
-    
-    $(".card-evento-cuadrilla .fa-share-alt").on('click', function(){
+
+    /*$(".card-evento-cuadrilla .fa-share-alt").on('click', function(){
         var cardEventoCuadrillaPadre = $(this).parents(".card-evento-cuadrilla");
         if (cardEventoCuadrillaPadre != undefined && cardEventoCuadrillaPadre){
             var rowNumber = cardEventoCuadrillaPadre.data("rownumber");
@@ -42,7 +37,7 @@ $(document).ready(function(){
                 $(".card-evento-cuadrilla[data-rownumber=" + rowNumber + "] .opciones-compartir").toggle('fast');
             }
         }
-    });
+    });*/
 });
 
 function ObtenerUnidadDeInformacion(x){
@@ -68,4 +63,45 @@ function ObtenerUnidadDeInformacion(x){
         promocion: true,
         hoy: true
     }
+}
+
+function obtenerEventos()
+{
+    var jqxhr = $.get(urlService, { inicio:0, fin:0, categoria:0 })
+    .done(function(data){
+        if (data){
+            if (data.eventos.length > 0)
+            {
+                var cadenaHoy = moment().format("DD/MM/YYYY");
+                var eventosHoy = [];
+                var eventosHoyDesordenados = [];
+                var eventosNoHoy = [];
+                
+                for (var x = 0; x < data.eventos.length; x++)
+                {
+                    if (data.eventos[x].fechaInicio.sinHora == cadenaHoy){
+                        eventosHoy.push(data.eventos[x]);
+                    }
+                    else {
+                        eventosNoHoy.push(data.eventos[x]);
+                    }
+                }                
+                
+                eventosHoyDesordenados = eventosHoy.map((a) => ({sort: Math.random(), value: a})).sort((a, b) => a.sort - b.sort).map((a) => a.value);
+                
+                $("#wrapper-cards-eventos").html("");
+                eventosHoyDesordenados.concat(eventosNoHoy).forEach(function(eventoItem, index){
+                    var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
+                    var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, eventoItem);
+                    $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
+                });
+            }
+        }
+    })
+    .fail(function(){
+        console.log("obtenerEventos()->Fail!");
+    })
+    .always(function(){
+        
+    });
 }
