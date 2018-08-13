@@ -28,6 +28,39 @@ $(document).ready(function(){
     console.log("Development: " + development);
     console.log("UrlService: " + urlService);
 
+    datepickerES();
+    /*JQueryUi DatePicker Mobile*/
+    $("#fecha-inicio-mobile").datepicker({
+        dateFormat: "dd/mm/yy",
+        minDate: moment().format("DD/MM/YYYY")  
+    });    
+    
+    $("#btn-filtro-fecha-mobile").on('click', function(){
+        $("#fecha-inicio-mobile").datepicker("show");
+        return false;
+    });
+    
+    $("#fecha-inicio-mobile").on('change',function(){
+        var fechaSeleccionadaMobile = $("#fecha-inicio-mobile").val();
+        alert("Fecha seleccionada mobile: " + fechaSeleccionadaMobile);
+    });    
+    
+    /*JQueryUi DatePicker Desk*/
+    $("#fecha-inicio-desk").datepicker({
+        dateFormat: "dd/mm/yy",
+        minDate: moment().format("DD/MM/YYYY")  
+    });
+    
+    $("#btn-filtro-fecha-desk").on('click', function(){
+        $("#fecha-inicio-desk").datepicker("show");
+        return false;
+    });
+    
+    $("#fecha-inicio-desk").on('change', function(){
+        var fechaSeleccionadaDesk = $("#fecha-inicio-desk").val();
+        console.log("Fecha seleccionada desk: " + fechaSeleccionadaDesk);
+    });
+
     /*$(".card-evento-cuadrilla .fa-share-alt").on('click', function(){
         var cardEventoCuadrillaPadre = $(this).parents(".card-evento-cuadrilla");
         if (cardEventoCuadrillaPadre != undefined && cardEventoCuadrillaPadre){
@@ -105,3 +138,26 @@ function obtenerEventos()
         
     });
 }
+
+function datepickerES(){
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '<Ant',
+        nextText: 'Sig>',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+}
+    

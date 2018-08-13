@@ -5,16 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Prototipo</title>
         <link rel="stylesheet" href="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets_2017/stylesheets/styles2018.css">
-        <!--<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/css/pace.flash.css">
         <link rel="stylesheet" href="css/agenda.css"> 
         <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/filtros.css">
         <link rel="stylesheet" href="css/cuadrilla.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="js/moment.min.js"></script>
-        <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>-->
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="https://www.prensalibre.com/CMSScripts/jquery/jquery-cookie.js"></script>
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/pace.min.js"></script>
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/mustache.min.js"></script>
@@ -94,10 +95,50 @@
                     </div>
                 </div>
             </script>
+                <div class="wrapper">
+                    <div class="contenedor-filtros">
+                        <div id="filtros-eventos">
+                            <div id="filtros-eventos-mobile">
+                                <div id="columna-filtros-mobile">
+                                    <select id="select-filtros-mobile">
+                                        <option>Todos</option>
+                                        <option>Hoy</option>
+                                        <option>Semana</option>
+                                        <option>Mes</option>
+                                    </select>
+                                    <button id="btn-filtro-fecha-mobile">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </button>
+                                    <input id="fecha-inicio-mobile" type="text">
+                                </div>
+                                <div id="columna-buscar-mobile">
+                                    <input id="txt-buscar-mobile" type="search" placeholder="Buscar">
+                                </div>
+                            </div>
+                            <div id="filtros-eventos-desk">
+                                <button class="btn-filtro-desk active" type="button">Todos</button>
+                                <button class="btn-filtro-desk" type="button">Hoy</button>
+                                <button class="btn-filtro-desk" type="button">Semana</button>
+                                <button class="btn-filtro-desk" type="button">Mes</button>
+                                <button id="btn-filtro-fecha-desk" class="" type="button"><i class="far fa-calendar-alt"></i></button>
+                                <input id="fecha-inicio-desk" type="text" placeholder="Fecha">
+                                <input id="txt-buscar-desk" type="search" placeholder="Buscar">
+                            </div>
+                        </div>
+                        <div id="contactar-publicar">
+                            <a id="link-contacto" href="/Agenda/Contacto">
+                                Contacto
+                            </a>
+                            <span> | </span>
+                            <a id="link-publicar" href="/Agenda/Publique-su-evento">
+                                Publique su evento
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div id="contenedor-mayor-modulo-eventos" class="full-width">
                     <div id="contenedor-cards-eventos" class="wrapper">
                         <div id="wrapper-cards-eventos">
-                            
                         </div>
                     </div>
                 </div>
