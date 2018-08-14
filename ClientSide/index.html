@@ -21,25 +21,25 @@
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/mustache.min.js"></script>
     </head>
     <body>
-        <nav id="nav-agenda">
-            <div id="nav-agenda-wrapper" class="wrapper">
-                <div id="contenedor-logo-agenda">
-                    <a href="/Agenda">
-                        <img id="logo-agenda" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/Agenda-V2.png" />
-                    </a>
+        <form>
+            <nav id="nav-agenda">
+                <div id="nav-agenda-wrapper" class="wrapper">
+                    <div id="contenedor-logo-agenda">
+                        <a href="/Agenda">
+                            <img id="logo-agenda" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/Agenda-V2.png" />
+                        </a>
+                    </div>
+                    <div id="contenedor-logo-pl">
+                        <a href="https://www.prensalibre.com/">
+                            <img id="logo-pl" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/Prensa-Libre-logo.png" />
+                        </a>
+                    </div>
+                    <div id="contenedor-categorias">
+
+                    </div>
                 </div>
-                <div id="contenedor-logo-pl">
-                    <a href="https://www.prensalibre.com/">
-                        <img id="logo-pl" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/Prensa-Libre-logo.png" />
-                    </a>
-                </div>
-                <div id="contenedor-categorias">
-                    
-                </div>
-            </div>
-        </nav>
-        <main id="main-contenedor-agenda">
-            <form>
+            </nav>
+            <main id="main-contenedor-agenda">
                 <script id="template-card-evento-cuadrilla" type="x-tmpl-mustache">
                 <div class="card-evento-cuadrilla" data-rowNumber="{{rowNumber}}">
                     <div class="internal">
@@ -101,10 +101,12 @@
                             <div id="filtros-eventos-mobile">
                                 <div id="columna-filtros-mobile">
                                     <select id="select-filtros-mobile">
-                                        <option>Todos</option>
-                                        <option>Hoy</option>
-                                        <option>Semana</option>
-                                        <option>Mes</option>
+                                        <option value="todos">Todos</option>
+                                        <option value="hoy">Hoy</option>
+                                        <option value="semana">Semana</option>
+                                        <option value="mes">Mes</option>
+                                        <option value="fecha" disabled>Fecha</option>
+                                        <option value="busqueda" disabled>Busqueda</option>
                                     </select>
                                     <button id="btn-filtro-fecha-mobile">
                                         <i class="far fa-calendar-alt"></i>
@@ -112,17 +114,17 @@
                                     <input id="fecha-inicio-mobile" type="text">
                                 </div>
                                 <div id="columna-buscar-mobile">
-                                    <input id="txt-buscar-mobile" type="search" placeholder="Buscar">
+                                    <input id="txt-buscar-mobile" type="text" placeholder="Buscar">
                                 </div>
                             </div>
                             <div id="filtros-eventos-desk">
-                                <button class="btn-filtro-desk active" type="button">Todos</button>
-                                <button class="btn-filtro-desk" type="button">Hoy</button>
-                                <button class="btn-filtro-desk" type="button">Semana</button>
-                                <button class="btn-filtro-desk" type="button">Mes</button>
+                                <button id="btn-filtro-todos-desk" class="btn-filtro-desk active" type="button" data-filtrar="todos">Todos</button>
+                                <button id="btn-filtro-hoy-desk" class="btn-filtro-desk" type="button" data-filtrar="hoy">Hoy</button>
+                                <button id="btn-filtro-semana-desk" class="btn-filtro-desk" type="button" data-filtrar="semana">Semana</button>
+                                <button id="btn-filtro-mes-desk" class="btn-filtro-desk" type="button" data-filtrar="mes">Mes</button>
                                 <button id="btn-filtro-fecha-desk" class="" type="button"><i class="far fa-calendar-alt"></i></button>
                                 <input id="fecha-inicio-desk" type="text" placeholder="Fecha">
-                                <input id="txt-buscar-desk" type="search" placeholder="Buscar">
+                                <input id="txt-buscar-desk" type="text" placeholder="Buscar">
                             </div>
                         </div>
                         <div id="contactar-publicar">
@@ -134,6 +136,9 @@
                                 Publique su evento
                             </a>
                         </div>
+                        <div id="mostrando">
+                            Mostrando: Todos
+                        </div>
                     </div>
                 </div>
                 <div id="contenedor-mayor-modulo-eventos" class="full-width">
@@ -142,8 +147,8 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </main>
-        <script type="text/javascript" src="js/agenda.js?v=001"></script>
+            </main>
+            <script type="text/javascript" src="js/agenda.js?v=001"></script>
+        </form>
     </body>
 </html>

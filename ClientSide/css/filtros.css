@@ -1,6 +1,7 @@
 /*INICIO COMUN*/
 .contenedor-filtros { display:flex; flex-wrap:wrap; }
 .contenedor-filtros #contactar-publicar { text-align:right; }
+.contenedor-filtros #mostrando { width:100%; order:3; margin-top:12px; color:#757575; }
 .contenedor-filtros #link-contacto { color:#757575; }
 .contenedor-filtros #link-publicar { color:#2c3240; }
 .contenedor-filtros #btn-filtro-fecha-desk { background-color:#FFF;padding:7px 9px; } 
@@ -12,6 +13,7 @@
 .contenedor-filtros { padding-top:7px; padding-bottom:7px; }
 .contenedor-filtros #filtros-eventos { width:100%; order:2; }
 .contenedor-filtros #contactar-publicar { width:100%; order:1; }
+.contenedor-filtros #mostrando { font-size:12px; }
 .contenedor-filtros #filtros-eventos-desk { display:none; }
 .contenedor-filtros #filtros-eventos-mobile { display:flex; padding:auto 5px; margin-top:7px; }
 .contenedor-filtros #columna-filtros-mobile { width:50%; }
@@ -28,10 +30,11 @@
 {
     .contenedor-filtros { padding-top:15px; padding-bottom:15px; }
     .contenedor-filtros #filtros-eventos { width:75%; order:1; }
-    .contenedor-filtros #contactar-publicar { width:25%; order:2; }
+    .contenedor-filtros #contactar-publicar { width:25%; order:2; font-size:19px; }
+    .contenedor-filtros #mostrando { font-size:16px; }
     .contenedor-filtros #filtros-eventos-mobile { display:none; }
     .contenedor-filtros #filtros-eventos-desk { display:inherit; }
-    .contenedor-filtros .btn-filtro-desk { border:1px solid #2c3240; padding:7px 15px; background-color:#2c3240; color:#ecedef; margin-right:7px; }
+    .contenedor-filtros .btn-filtro-desk { border:1px solid #2c3240; padding:7px 25px; background-color:#2c3240; color:#ecedef; margin-right:7px; }
     .contenedor-filtros .btn-filtro-desk.active { background-color:#ecedef; color:#2c3240; }
 }
 /*FIN DESK*/

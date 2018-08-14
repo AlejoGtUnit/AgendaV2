@@ -1,5 +1,6 @@
 var eventosPorPagina = 12;
 var development = true;
+var filtroEventos = 'todos'; //todos,hoy,semana,mes,fecha,busqueda
 
 var urlsCategorias = 
 [   
@@ -16,7 +17,6 @@ var urlsCategorias =
 var urlService = "//" + window.location.host + "/TiempoLibreServiceV2";
 if (development)
     urlService = "https://gnw.prensalibre.com/TiempoLibreServiceV2";
-
 
 var templateCardEventoCuadrilla = $('#template-card-evento-cuadrilla').html();
 Mustache.parse(templateCardEventoCuadrilla);
@@ -40,11 +40,6 @@ $(document).ready(function(){
         return false;
     });
     
-    $("#fecha-inicio-mobile").on('change',function(){
-        var fechaSeleccionadaMobile = $("#fecha-inicio-mobile").val();
-        alert("Fecha seleccionada mobile: " + fechaSeleccionadaMobile);
-    });    
-    
     /*JQueryUi DatePicker Desk*/
     $("#fecha-inicio-desk").datepicker({
         dateFormat: "dd/mm/yy",
@@ -54,11 +49,6 @@ $(document).ready(function(){
     $("#btn-filtro-fecha-desk").on('click', function(){
         $("#fecha-inicio-desk").datepicker("show");
         return false;
-    });
-    
-    $("#fecha-inicio-desk").on('change', function(){
-        var fechaSeleccionadaDesk = $("#fecha-inicio-desk").val();
-        console.log("Fecha seleccionada desk: " + fechaSeleccionadaDesk);
     });
 
     /*$(".card-evento-cuadrilla .fa-share-alt").on('click', function(){
@@ -100,7 +90,9 @@ function ObtenerUnidadDeInformacion(x){
 
 function obtenerEventos()
 {
-    var jqxhr = $.get(urlService, { inicio:0, fin:0, categoria:0 })
+    var fechaSeleccionada = $("#fecha-inicio-desk").val();
+    var textoBusqueda = $("#txt-buscar-mobile").val();
+    var jqxhr = $.get(urlService, { filtro: filtroEventos, fecha:fechaSeleccionada, texto:textoBusqueda })
     .done(function(data){
         if (data){
             if (data.eventos.length > 0)
@@ -128,6 +120,9 @@ function obtenerEventos()
                     var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, eventoItem);
                     $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
                 });
+            }
+            else {
+                $("#wrapper-cards-eventos").html("");
             }
         }
     })
@@ -160,4 +155,131 @@ function datepickerES(){
     
     $.datepicker.setDefaults($.datepicker.regional['es']);
 }
+
+//Filtrado Desk
+$("#btn-filtro-todos-desk, #btn-filtro-hoy-desk, #btn-filtro-semana-desk, #btn-filtro-mes-desk").on("click", function(){
+    $("#fecha-inicio-mobile").val("");
+    $("#fecha-inicio-desk").val("");
     
+    var filtrar = $(this).data("filtrar");
+    switch(filtrar){
+        case "todos": 
+            filtroEventos = 'todos';
+            break;
+        case "hoy":
+            filtroEventos = 'hoy';
+            break;
+        case "semana":
+            filtroEventos = 'semana';
+            break;
+        case "mes": 
+            filtroEventos = 'mes'
+            break;
+    }
+    mostrarSeleccionFiltro();
+    obtenerEventos();
+});   
+
+//Cambio Fecha Desk
+$("#fecha-inicio-desk").on('change', function(){
+    var fechaSeleccionadaDesk = $("#fecha-inicio-desk").val();
+    $("#fecha-inicio-mobile").val(fechaSeleccionadaDesk);
+    $(".btn-filtro-desk").removeClass("active");
+    
+    if (fechaSeleccionadaDesk != "")
+        filtroEventos = "fecha";
+    else
+        filtroEventos = "todos";
+    
+    obtenerEventos();
+    mostrarSeleccionFiltro();
+});
+
+//Filtrado Mobile
+$("#select-filtros-mobile").on('change', function()
+{
+    $("#fecha-inicio-mobile").val("");
+    $("#fecha-inicio-desk").val("");
+    
+    filtroEventos = $("#select-filtros-mobile").val();
+    mostrarSeleccionFiltro();
+    obtenerEventos();
+});
+
+$("#fecha-inicio-mobile").on('change', function(){
+    var fechaSeleccionadaMobile = $("#fecha-inicio-mobile").val();
+    $("#fecha-inicio-desk").val(fechaSeleccionadaMobile);
+    
+    if (fechaSeleccionadaMobile != "")
+        filtroEventos = "fecha";
+    else
+        filtroEventos = "todos";
+    
+    obtenerEventos();
+    mostrarSeleccionFiltro();
+})
+
+function mostrarSeleccionFiltro()
+{
+    $(".btn-filtro-desk").removeClass("active");
+    switch (filtroEventos)
+    {
+        case 'todos':
+            $("#select-filtros-mobile").val("todos");
+            $("#btn-filtro-todos-desk").addClass("active");
+            $("#mostrando").text("Mostrando: Todos");
+            break;
+        case 'hoy':
+            $("#select-filtros-mobile").val("hoy");
+            $("#btn-filtro-hoy-desk").addClass("active");
+            $("#mostrando").text("Mostrando: Hoy");
+            break;
+        case 'semana':
+            $("#select-filtros-mobile").val("semana");
+            $("#btn-filtro-semana-desk").addClass("active");
+            $("#mostrando").text("Mostrando: Semana");
+            break;
+        case 'mes':
+            $("#select-filtros-mobile").val("mes");
+            $("#btn-filtro-mes-desk").addClass("active");
+            $("#mostrando").text("Mostrando: Mes");
+            break;
+        case 'fecha':
+            $("#select-filtros-mobile").val("fecha");
+            $("#mostrando").text("Mostrando: " + $("#fecha-inicio-mobile").val());
+            break;
+        case 'busqueda':
+            $("#select-filtros-mobile").val("busqueda");
+            $("#mostrando").text("Mostrando: " + $("#txt-buscar-mobile").val());
+            break;
+        default:
+            break;
+    }
+    
+    if (filtroEventos != 'fecha'){
+        $("#fecha-inicio-mobile").val("");
+        $("#fecha-inicio-desk").val("");
+    }
+    
+    if (filtroEventos != 'busqueda'){
+        $("#txt-buscar-mobile").val("");
+        $("#txt-buscar-desk").val("");
+    }
+}
+
+$("#txt-buscar-mobile").on('keyup',function(){
+    $("#txt-buscar-desk").val($("#txt-buscar-mobile").val());
+});
+
+$("#txt-buscar-desk").on('keyup',function(){
+    $("#txt-buscar-mobile").val($("#txt-buscar-desk").val());
+});
+
+$("#txt-buscar-mobile, #txt-buscar-desk").bind('keypress keydown keyup', function(e){
+   if(e.keyCode == 13) {
+        filtroEventos = 'busqueda';
+        obtenerEventos();
+        mostrarSeleccionFiltro();
+        e.preventDefault(); 
+   }
+});
