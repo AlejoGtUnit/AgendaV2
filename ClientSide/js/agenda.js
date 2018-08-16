@@ -98,11 +98,15 @@ function obtenerEventos()
         {
             if (data.eventos.length > 0)
             {
-                if ($("#paginacion-eventos").html().trim() == ""){
+                //if ($("#paginacion-eventos").html().trim() == "")
+                {
                     var totalEventos = data.total;
-                    console.log("Maximo de eventos disponibles apartir de hoy: " + totalEventos);
                     var totalPaginas = Math.ceil(totalEventos / eventosPorPagina);
+                    console.log("Eventos encontrados:" + totalEventos, ", paginas:" + totalPaginas);
                     generarPaginacion(totalPaginas);
+                    
+                    if (data.pagina != undefined && data.pagina)
+                        $(".pagina-eventos[data-pagina=" + data.pagina + "]").addClass("active");
                 }
                 
                 var cadenaHoy = moment().format("DD/MM/YYYY");
@@ -306,21 +310,21 @@ function generarPaginacion(paginas)
     for(var x=1; x <= paginas; x++)
     {
         var htmlActual = $("#paginacion-eventos").html();
-        var claseActiva = (x == 1 ? "active" : "");
-        var htmlPagina = "<span class='pagina-eventos " + claseActiva + "' data-pagina='" + x + "'>" + x + " </span>";
+        //var claseActiva = (x == 1 ? "active" : "");
+        var htmlPagina = "<span class='pagina-eventos' data-pagina='" + x + "'>" + x + " </span>";
         $("#paginacion-eventos").html(htmlActual + htmlPagina);
     }
     
     $(".pagina-eventos").on('click', function(){
         var paginaSeleccionada = $(this).data("pagina");
-        console.log("Pagina: " + paginaSeleccionada);
-        
-        if (paginaSeleccionada != undefined && paginaSeleccionada){
-            var fin = paginaSeleccionada * eventosPorPagina;
-            var inicio = (fin - eventosPorPagina) + 1;
+        if (paginaSeleccionada != undefined && paginaSeleccionada)
+        {
+            console.log("Pagina: " + paginaSeleccionada);
+            
+            mostrarSeleccionFiltro();
+            pagina = paginaSeleccionada;
+            obtenerEventos();
         }
-        $(".pagina-eventos").removeClass("active");
-        $(this).addClass("active");
     });
 }
 
