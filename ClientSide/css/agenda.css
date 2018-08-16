@@ -1,4 +1,26 @@
 body { font-family: 'Ubuntu', sans-serif; }
 .full-width { width:100%; }
 #contenedor-mayor-modulo-eventos { background-color:#ecedef; }
-#main-contenedor-agenda { background-color:#ecedef; }
+#main-contenedor-agenda { background-color:#ecedef;  }
+
+
+/*INICIO COMUN*/
+#paginacion-eventos { background-color:#FFF; width:100%; display:flex; justify-content:center; align-items:center; }
+.pagina-eventos { cursor:pointer; color:#757575; font-weight:bold; }
+.pagina-eventos.active { color:#4783b2; }
+/*FIN COMUN*/
+
+/*INICIO MOBILE*/
+#wrapper-paginacion { padding-left:4px; padding-right:4px;}
+#paginacion-eventos { height:40px; }
+.pagina-eventos { font-size:18px; margin-left:4px; margin-right:4px; }
+/*FIN MOBILE*/
+
+/*INICIO DESK*/
+@media only screen and (min-width: 768px) 
+{
+    #wrapper-paginacion { padding-left:8px; padding-right:8px;  }
+    #paginacion-eventos { height:45px; }
+    .pagina-eventos { font-size:20px; margin-left:7px; margin-right:7px; }
+}
+/*FIN DESK*/

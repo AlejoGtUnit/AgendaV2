@@ -5,7 +5,7 @@
 .contenedor-filtros #link-contacto { color:#757575; }
 .contenedor-filtros #link-publicar { color:#2c3240; }
 .contenedor-filtros #btn-filtro-fecha-desk { background-color:#FFF;padding:7px 9px; } 
-.contenedor-filtros #fecha-inicio-desk { width:125px; margin:0 !important; padding:7px 9px; margin-left:-5px !important; }
+.contenedor-filtros #fecha-inicio-desk { width:125px; margin:0 !important; padding:7px 9px; margin-left:-4px !important; }
 .contenedor-filtros #txt-buscar-desk { padding:7px 7px; width:250px; }
 /*FIN COMUN*/
 
@@ -36,5 +36,7 @@
     .contenedor-filtros #filtros-eventos-desk { display:inherit; }
     .contenedor-filtros .btn-filtro-desk { border:1px solid #2c3240; padding:7px 25px; background-color:#2c3240; color:#ecedef; margin-right:7px; }
     .contenedor-filtros .btn-filtro-desk.active { background-color:#ecedef; color:#2c3240; }
+    .contenedor-filtros #btn-filtro-fecha-desk { border:1px solid #2c3240; background-color:#2c3240; color:#ecedef; }
+    .contenedor-filtros #btn-filtro-fecha-desk.active { background-color:#ecedef; color:#2c3240; }
 }
 /*FIN DESK*/

@@ -1,7 +1,7 @@
+var pagina = 1;
 var eventosPorPagina = 12;
 var development = true;
 var filtroEventos = 'todos'; //todos,hoy,semana,mes,fecha,busqueda
-
 var urlsCategorias = 
 [   
     { "patron": "/tiempolibre/cine-y-teatro", "codigo": 1 },
@@ -92,11 +92,19 @@ function obtenerEventos()
 {
     var fechaSeleccionada = $("#fecha-inicio-desk").val();
     var textoBusqueda = $("#txt-buscar-mobile").val();
-    var jqxhr = $.get(urlService, { filtro: filtroEventos, fecha:fechaSeleccionada, texto:textoBusqueda })
+    var jqxhr = $.get(urlService, { filtro: filtroEventos, pagina:pagina, eventosPorPagina:eventosPorPagina, fecha:fechaSeleccionada, texto:textoBusqueda })
     .done(function(data){
-        if (data){
+        if (data)
+        {
             if (data.eventos.length > 0)
             {
+                if ($("#paginacion-eventos").html().trim() == ""){
+                    var totalEventos = data.total;
+                    console.log("Maximo de eventos disponibles apartir de hoy: " + totalEventos);
+                    var totalPaginas = Math.ceil(totalEventos / eventosPorPagina);
+                    generarPaginacion(totalPaginas);
+                }
+                
                 var cadenaHoy = moment().format("DD/MM/YYYY");
                 var eventosHoy = [];
                 var eventosHoyDesordenados = [];
@@ -123,6 +131,7 @@ function obtenerEventos()
             }
             else {
                 $("#wrapper-cards-eventos").html("");
+                $("#paginacion-eventos").html("");
             }
         }
     })
@@ -177,6 +186,7 @@ $("#btn-filtro-todos-desk, #btn-filtro-hoy-desk, #btn-filtro-semana-desk, #btn-f
             break;
     }
     mostrarSeleccionFiltro();
+    pagina = 1;
     obtenerEventos();
 });   
 
@@ -191,6 +201,7 @@ $("#fecha-inicio-desk").on('change', function(){
     else
         filtroEventos = "todos";
     
+    pagina = 1;
     obtenerEventos();
     mostrarSeleccionFiltro();
 });
@@ -203,6 +214,7 @@ $("#select-filtros-mobile").on('change', function()
     
     filtroEventos = $("#select-filtros-mobile").val();
     mostrarSeleccionFiltro();
+    pagina = 1;
     obtenerEventos();
 });
 
@@ -215,6 +227,7 @@ $("#fecha-inicio-mobile").on('change', function(){
     else
         filtroEventos = "todos";
     
+    pagina = 1;
     obtenerEventos();
     mostrarSeleccionFiltro();
 })
@@ -222,6 +235,7 @@ $("#fecha-inicio-mobile").on('change', function(){
 function mostrarSeleccionFiltro()
 {
     $(".btn-filtro-desk").removeClass("active");
+    $("#btn-filtro-fecha-desk").removeClass("active");
     switch (filtroEventos)
     {
         case 'todos':
@@ -246,6 +260,7 @@ function mostrarSeleccionFiltro()
             break;
         case 'fecha':
             $("#select-filtros-mobile").val("fecha");
+            $("#btn-filtro-fecha-desk").addClass("active");
             $("#mostrando").text("Mostrando: " + $("#fecha-inicio-mobile").val());
             break;
         case 'busqueda':
@@ -277,9 +292,35 @@ $("#txt-buscar-desk").on('keyup',function(){
 
 $("#txt-buscar-mobile, #txt-buscar-desk").bind('keypress keydown keyup', function(e){
    if(e.keyCode == 13) {
-        filtroEventos = 'busqueda';
-        obtenerEventos();
-        mostrarSeleccionFiltro();
-        e.preventDefault(); 
+       filtroEventos = 'busqueda';
+       pagina = 1;
+       obtenerEventos();
+       mostrarSeleccionFiltro();
+       e.preventDefault(); 
    }
 });
+
+function generarPaginacion(paginas)
+{
+    $("#paginacion-eventos").html("");
+    for(var x=1; x <= paginas; x++)
+    {
+        var htmlActual = $("#paginacion-eventos").html();
+        var claseActiva = (x == 1 ? "active" : "");
+        var htmlPagina = "<span class='pagina-eventos " + claseActiva + "' data-pagina='" + x + "'>" + x + " </span>";
+        $("#paginacion-eventos").html(htmlActual + htmlPagina);
+    }
+    
+    $(".pagina-eventos").on('click', function(){
+        var paginaSeleccionada = $(this).data("pagina");
+        console.log("Pagina: " + paginaSeleccionada);
+        
+        if (paginaSeleccionada != undefined && paginaSeleccionada){
+            var fin = paginaSeleccionada * eventosPorPagina;
+            var inicio = (fin - eventosPorPagina) + 1;
+        }
+        $(".pagina-eventos").removeClass("active");
+        $(this).addClass("active");
+    });
+}
+
