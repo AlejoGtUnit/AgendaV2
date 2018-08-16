@@ -6,8 +6,9 @@ protected override void OnLoad(EventArgs e)
 {
     base.OnLoad(e);
     Response.Clear();
-    //Response.AddHeader("Access-Control-Allow-Origin", "http://172.22.2.135");
-    Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
+    Response.AddHeader("Access-Control-Allow-Origin", "http://172.22.2.135");
+    //Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
+    //Response.AddHeader("Access-Control-Allow-Origin", "http://192.168.1.159");
     Response.ContentType = "application/json; charset=utf-8";
     
     var listaEventos = new System.Collections.Generic.List<object>();    
@@ -22,6 +23,9 @@ protected override void OnLoad(EventArgs e)
     string pFiltro = Request.QueryString["filtro"];
     string pFecha = Request.QueryString["fecha"];
     string pTexto = Request.QueryString["texto"];
+    string pPagina = Request.QueryString["pagina"];
+    string pEventosPorPagina = Request.QueryString["eventosPorPagina"];
+  
     if (!string.IsNullOrEmpty(pFiltro))
     {
         DateTime ahorita = System.DateTime.Now;
@@ -61,13 +65,28 @@ protected override void OnLoad(EventArgs e)
                 listaEventos = listaEventos.Where((dynamic x) => { return x.titulo.ToString().ToLower().Contains(pTexto.ToLower()) | x.resumen.ToString().ToLower().Contains(pTexto.ToLower()); }).ToList();
         }
     }
+
+    int totalEventos = listaEventos.Count();
+    
+    int pagina;
+    if (!int.TryParse(pPagina, out pagina))
+        pagina = 1;
+
+    int eventosPorPagina;
+    if (!int.TryParse(pEventosPorPagina, out eventosPorPagina))
+        eventosPorPagina = totalEventos;
   
     var cadenaJson = Newtonsoft.Json.JsonConvert.SerializeObject(new 
     {
         filtro = pFiltro,
         fecha = pFecha,
         texto = pTexto,
-        eventos = listaEventos.OrderBy((dynamic x) => { return x.fechaInicio.valor; }).Distinct()
+        total = totalEventos,
+        pagina = pPagina,
+        eventosPorPagina = pEventosPorPagina,
+        //eventos = listaEventos.OrderBy((dynamic x) => { return x.fechaInicio.valor; }).ToList(),
+        eventos = this.paginarResultado(listaEventos.OrderBy((dynamic x) => { return x.fechaInicio.valor; }).ToList(), pagina, eventosPorPagina),
+        ServerDateTime = System.DateTime.Now.ToString()
     });
     Response.Write(cadenaJson);
     Response.End();
@@ -261,6 +280,20 @@ protected object ObtenerFecha(object entrada)
             hora = fecha.Hour.ToString().PadLeft(2, '0'),
             minuto = fecha.Minute.ToString().PadLeft(2, '0')
         };
+    }
+    return resultado;
+}
+                                                                 
+protected List<object> paginarResultado(List<object> entrada, int pagina, int eventosPorPagina)
+{
+    var resultado = new List<object>();
+
+    var indexMenor = (pagina * eventosPorPagina) - eventosPorPagina;
+    var indexMayor = (pagina * eventosPorPagina) - 1;
+    for (var x=0; x < entrada.Count; x++)
+    {
+        if (x >= indexMenor && x <= indexMayor)
+            resultado.Add(entrada[x]);
     }
     return resultado;
 }

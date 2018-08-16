@@ -324,6 +324,7 @@ function generarPaginacion(paginas)
             mostrarSeleccionFiltro();
             pagina = paginaSeleccionada;
             obtenerEventos();
+            $("html, body").animate({ scrollTop: $('#main-contenedor-agenda').offset().top }, 700);
         }
     });
 }
