@@ -8,7 +8,8 @@
 #carousel-categorias .owl-stage-outer { display:flex; height:100%; align-content:center; }
 #carousel-categorias .owl-stage { display:flex; height:100%; align-content:center; }
 #carousel-categorias .owl-item { display:flex; align-content:center; height:100%; }
-#carousel-categorias .categoria { display:flex; align-items:center; color:#FFF; cursor:pointer; justify-content:center; }
+#carousel-categorias .categoria { display:flex; align-items:center; color:#FFF; cursor:pointer; justify-content:center; text-align:center; }
+.categoria a { display:flex; align-items:center; justify-content:center; text-align:center;; }
 #carousel-categorias .img-categoria { width:auto; }
 /*FIN COMUN*/
 
@@ -17,7 +18,7 @@
 #categorias-left .fa-chevron-left { font-size:16px; }
 #carousel-categorias { width:60%; font-size:12px; }
 #carousel-categorias .categoria { width:100%; }
-#carousel-categorias .img-categoria { height:30px; margin-right:2px; }
+#carousel-categorias .img-categoria { height:30px; }
 #categorias-right { width:20%; }
 #categorias-right .fa-chevron-right { font-size:16px; }
 
@@ -29,10 +30,11 @@
 {
     #contenedor-categorias { height:100%; }
     #categorias-left { width:10%; }
-    #categorias-left .fa-chevron-left { font-size:20px; }
-    #carousel-categorias { width:80%; font-size:14px; }
+    #categorias-left .fa-chevron-left { font-size:17px; }
+    #carousel-categorias { width:80%; font-size:13px; }
     #categorias-right { width:10%; }
     #categorias-right .fa-chevron-right { font-size:20px; }
-    #carousel-categorias .img-categoria { height:40px; margin-right:5px; }
+    .categoria a { width:90%; }
+    #carousel-categorias .img-categoria { width:33%; }
 }
 /*FIN DESK*/

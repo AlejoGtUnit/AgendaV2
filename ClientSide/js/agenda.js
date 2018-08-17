@@ -4,14 +4,14 @@ var development = true;
 var filtroEventos = 'todos'; //todos,hoy,semana,mes,fecha,busqueda
 var urlsCategorias = 
 [   
-    { "patron": "/agenda/cine-y-teatro", "codigo":1, "carousel":"categoria-conciertos" },
-    { "patron": "/agenda/actividades-familiares", "codigo":2, "carousel":"categoria-deportes" },
-    { "patron": "/agenda/conciertos", "codigo":3, carousel:"categoria-cineteatro" },
-    { "patron": "/agenda/deportes", "codigo":4, carousel:"categoria-familiares" },
-    { "patron": "/agenda/expediciones-y-viajes", "codigo":5, carousel:"categoria-expedicionesviajes" },
-    { "patron": "/agenda/gastronomia", "codigo":6, carousel:"categoria-gastronomia" },
-    { "patron": "/agenda/exposiciones-y-convenciones", "codigo":7, carousel:"categoria-exposicionesconvenciones" },
-    { "patron": "/agenda/vida-nocturna", "codigo":8, carousel:"categoria-vidanoctura" }
+    { "patron": "/agenda/cine-y-teatro", "codigo":1, "carousel":"categoria-cineteatro", indiceCarousel:2 },
+    { "patron": "/agenda/actividades-familiares", "codigo":2, "carousel":"categoria-familiares", indiceCarousel:3 },
+    { "patron": "/agenda/conciertos", "codigo":3, carousel:"categoria-conciertos", indiceCarousel:0 },
+    { "patron": "/agenda/deportes", "codigo":4, carousel:"categoria-deportes", indiceCarousel:1 },
+    { "patron": "/agenda/expediciones-y-viajes", "codigo":5, carousel:"categoria-expedicionesviajes", indiceCarousel:4 },
+    { "patron": "/agenda/gastronomia", "codigo":6, carousel:"categoria-gastronomia", indiceCarousel:5 },
+    { "patron": "/agenda/exposiciones-y-convenciones", "codigo":7, carousel:"categoria-exposicionesconvenciones", indiceCarousel:6 },
+    { "patron": "/agenda/vida-nocturna", "codigo":8, carousel:"categoria-vidanoctura", indiceCarousel:7 }
 ];
 
 function obtenerCodigoCategoria()
@@ -357,7 +357,7 @@ function mostrarCategoriaSeleccionada()
             var srcImagen = $("#" + conf.carousel + " .img-categoria").attr("src");
             $("#" + conf.carousel + " .img-categoria").attr("src", srcImagen.replace(".png", "_hover.png"));
             
-            $("#carousel-categorias").trigger('to.owl.carousel', categoria - 1,500);
+            $("#carousel-categorias").trigger('to.owl.carousel', conf.indiceCarousel, 500);
         }
     }
 }

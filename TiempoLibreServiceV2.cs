@@ -25,11 +25,20 @@ protected override void OnLoad(EventArgs e)
     string pTexto = Request.QueryString["texto"];
     string pPagina = Request.QueryString["pagina"];
     string pEventosPorPagina = Request.QueryString["eventosPorPagina"];
+    string pUrlEvento = Request.QueryString["urlEvento"];
+    string pCategoria = Request.QueryString["categoria"];
   
     if (!string.IsNullOrEmpty(pFiltro))
     {
         DateTime ahorita = System.DateTime.Now;
         DateTime inicio = new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 0, 0, 0);
+      
+        //Filtro por categorias
+        if (pFiltro == "todos" || pFiltro == "hoy" || pFiltro == "semana" || pFiltro == "mes")
+        {
+            listaEventos = listaEventos.Where((dynamic x) => { return x.codigosCategorias.ToString().Contains(pCategoria); }).ToList();
+        }
+      
         if (pFiltro == "hoy")
         {
             DateTime fin = new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 23, 59, 59);
@@ -64,6 +73,11 @@ protected override void OnLoad(EventArgs e)
             if (!string.IsNullOrEmpty(pTexto))
                 listaEventos = listaEventos.Where((dynamic x) => { return x.titulo.ToString().ToLower().Contains(pTexto.ToLower()) | x.resumen.ToString().ToLower().Contains(pTexto.ToLower()); }).ToList();
         }
+        else if (pFiltro == "evento")
+        {
+            if (!string.IsNullOrEmpty(pUrlEvento))
+                listaEventos = listaEventos.Where((dynamic x) => { return x.urlEvento.ToString().ToLower() == pUrlEvento.ToLower(); }).ToList();
+        }
     }
 
     int totalEventos = listaEventos.Count();
@@ -84,7 +98,7 @@ protected override void OnLoad(EventArgs e)
         total = totalEventos,
         pagina = pPagina,
         eventosPorPagina = pEventosPorPagina,
-        //eventos = listaEventos.OrderBy((dynamic x) => { return x.fechaInicio.valor; }).ToList(),
+        categoria = pCategoria,
         eventos = this.paginarResultado(listaEventos.OrderBy((dynamic x) => { return x.fechaInicio.valor; }).ToList(), pagina, eventosPorPagina),
         ServerDateTime = System.DateTime.Now.ToString()
     });
@@ -225,7 +239,7 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
             var imagenSmallFullSizeValor = GSIFunctions.GetGSIImageURLGUID(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "auto", "auto", string.Empty);
             if (!string.IsNullOrEmpty(imagenSmallFullSizeValor) && imagenSmallFullSizeValor.IndexOf("http://gnw.") == -1)
                 imagenSmallFullSizeValor = imagenSmallFullSizeValor.Replace("http://", "https://");
-            //var categoriasValor = fila["Categorias"] != null ? ObtenerCategorias(fila["Categorias"].ToString()) : string.Empty;
+            var codigosCategoriasValor = fila["Categorias"].ToString();
             var hoyValor = System.DateTime.Now.ToShortDateString() == fechaInicio.ToShortDateString();
             var promocionValor = !string.IsNullOrEmpty(fila["UrlTicket"].ToString());
 
@@ -238,7 +252,7 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
                 resumenLimited = resumenLimitedValor,
                 urlEvento = urlEventoValor,
                 urlEventoCompleta = urlEventoCompletaValor,
-                //categorias = categoriasValor,
+                codigosCategorias = codigosCategoriasValor,
                 fechaInicio = fechaInicioValor,
                 fechaFinal = fechaFinalValor,
                 hoy = hoyValor,
