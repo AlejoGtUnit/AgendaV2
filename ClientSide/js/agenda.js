@@ -135,7 +135,9 @@ function obtenerEventos()
         console.log("obtenerEventos()->Fail!");
     })
     .always(function(){
-        
+        $(".card-evento-cuadrilla .fa-share-alt").on('click', function(){
+            $(this).parents(".card-evento-cuadrilla").find(".opciones-compartir").toggle(350);
+        });
     });
 }
 

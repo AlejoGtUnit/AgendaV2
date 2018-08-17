@@ -10,7 +10,7 @@
 /*FIN COMUN*/
 
 /*INICIO MOBILE*/
-.contenedor-filtros { padding-top:7px; padding-bottom:7px; }
+.contenedor-filtros { padding-top:14px; padding-bottom:7px; }
 .contenedor-filtros #filtros-eventos { width:100%; order:2; }
 .contenedor-filtros #contactar-publicar { width:100%; order:1; }
 .contenedor-filtros #mostrando { font-size:12px; }

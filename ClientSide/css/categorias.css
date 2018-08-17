@@ -35,6 +35,6 @@
     #categorias-right { width:10%; }
     #categorias-right .fa-chevron-right { font-size:20px; }
     .categoria a { width:90%; }
-    #carousel-categorias .img-categoria { width:33%; }
+    #carousel-categorias .img-categoria { width:33%; height:auto;}
 }
 /*FIN DESK*/
