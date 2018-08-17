@@ -8,10 +8,13 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/css/pace.flash.css">
         <link rel="stylesheet" href="css/agenda.css"> 
-        <link rel="stylesheet" href="css/nav.css">
         <link rel="stylesheet" href="css/filtros.css">
         <link rel="stylesheet" href="css/cuadrilla.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://d3ustg7s7bf7i9.cloudfront.net/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/OwlCarousel2-2.2.1/dist/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://d3ustg7s7bf7i9.cloudfront.net/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/OwlCarousel2-2.2.1/dist/assets/owl.theme.default.min.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/categorias.css">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="js/moment.min.js"></script>
@@ -19,6 +22,7 @@
         <script type="text/javascript" src="https://www.prensalibre.com/CMSScripts/jquery/jquery-cookie.js"></script>
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/pace.min.js"></script>
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/mustache.min.js"></script>
+        <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/OwlCarousel2-2.2.1/dist/owl.carousel.min.js"></script>
     </head>
     <body>
         <form>
@@ -35,7 +39,46 @@
                         </a>
                     </div>
                     <div id="contenedor-categorias">
-
+                        <div id="categorias-left">
+                            <span class="fas fa-chevron-left"></span>
+                        </div>
+                        <div id="carousel-categorias" class="owl-carousel owl-theme">
+                            <span id="categoria-conciertos" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/concierto.png" />
+                                Conciertos
+                            </span>
+                            <span id="categoria-deportes" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/deportes.png" />
+                                Deportes
+                            </span>
+                            <span id="categoria-cineteatro" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/cine%20teatro.png" />
+                                Cine y teatro
+                            </span>
+                            <span id="categoria-familiares" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/familia.png" />
+                                Familiares
+                            </span>
+                            <span id="categoria-expedicionesviajes" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/expediciones.png" />
+                                Expediciones y viajes
+                            </span>
+                            <span id="categoria-gastronomia" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/gastronomia.png" />
+                                Gastronomía
+                            </span>
+                            <span id="categoria-exposicionesconvenciones" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/exposiciones.png" />
+                                Exposiciones y convenciones
+                            </span>
+                            <span id="categoria-vidanoctura" class="categoria">
+                                <img class="img-categoria" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/ASSETS/carousel_categorias/vida%20nocturna.png" />
+                                Vida nocturna
+                            </span>
+                        </div>
+                        <div id="categorias-right">
+                            <span class="fas fa-chevron-right"></span>
+                        </div>
                     </div>
                 </div>
             </nav>

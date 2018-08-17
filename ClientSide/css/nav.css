@@ -28,9 +28,9 @@
     #nav-agenda-wrapper { height:var(--nav-height-desk); }
     #contenedor-logo-agenda { width:25%; height:auto; }
     #logo-agenda { width:245px; padding-left:10px; margin-top:0; }
-    #contenedor-logo-pl { width:25%; height:auto; }
+    #contenedor-logo-pl { width:15%; height:auto; }
     #logo-pl { width:95px; margin-top:0; float:none; }
-    #contenedor-categorias { width:50%; height:auto; }
+    #contenedor-categorias { width:60%; height:auto; }
     #main-contenedor-agenda { margin-top:var(--nav-height-desk); }
 }
 /*FIN DESK*/

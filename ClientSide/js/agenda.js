@@ -4,15 +4,29 @@ var development = true;
 var filtroEventos = 'todos'; //todos,hoy,semana,mes,fecha,busqueda
 var urlsCategorias = 
 [   
-    { "patron": "/tiempolibre/cine-y-teatro", "codigo": 1 },
-    { "patron": "/tiempolibre/actividades-familiares", "codigo": 2 },
-    { "patron": "/tiempolibre/conciertos", "codigo": 3},
-    { "patron": "/tiempolibre/deportes", "codigo": 4 },
-    { "patron": "/tiempolibre/expediciones-y-viajes", "codigo":5 },
-    { "patron": "/tiempolibre/gastronomia", "codigo":6 },
-    { "patron": "/tiempolibre/exposiciones-y-convenciones", "codigo":7 },
-    { "patron": "/tiempolibre/vida-nocturna", "codigo":8 }
+    { "patron": "/agenda/cine-y-teatro", "codigo":1, "carousel":"categoria-conciertos" },
+    { "patron": "/agenda/actividades-familiares", "codigo":2, "carousel":"categoria-deportes" },
+    { "patron": "/agenda/conciertos", "codigo":3, carousel:"categoria-cineteatro" },
+    { "patron": "/agenda/deportes", "codigo":4, carousel:"categoria-familiares" },
+    { "patron": "/agenda/expediciones-y-viajes", "codigo":5, carousel:"categoria-expedicionesviajes" },
+    { "patron": "/agenda/gastronomia", "codigo":6, carousel:"categoria-gastronomia" },
+    { "patron": "/agenda/exposiciones-y-convenciones", "codigo":7, carousel:"categoria-exposicionesconvenciones" },
+    { "patron": "/agenda/vida-nocturna", "codigo":8, carousel:"categoria-vidanoctura" }
 ];
+
+function obtenerCodigoCategoria()
+{
+    var resultado = "";
+    var href = window.location.href.toLowerCase();
+    var categoria = urlsCategorias.find(function(item){
+        return (href.indexOf(item.patron) > -1);
+    });
+    
+    if (categoria != undefined && categoria){
+        resultado = categoria.codigo;
+    }
+    return resultado;
+}
 
 var urlService = "//" + window.location.host + "/TiempoLibreServiceV2";
 if (development)
@@ -61,38 +75,15 @@ $(document).ready(function(){
             }
         }
     });*/
+    
+    mostrarCategoriaSeleccionada();
 });
-
-function ObtenerUnidadDeInformacion(x){
-    return {
-        rowNumber: x,
-        tituloLimited: 'Exposición colectiva de mujeres "VITAL"',
-        resumenLimited: '17 artistas presentarán obras inspiradas en las fuentes naturales de energía.',
-        imagenSmall: 'https://gnwebprensalibrerootwest.s3.us-west-2.amazonaws.com/mmediafiles/pl/f7/f7072e7d-515b-46e0-ac9e-d7c735956dad_383_216.jpg',
-        urlEvento: '/Agenda/Cine-y-Teatro/JUL18-Teatro-comediantes-vrd',
-        urlEventoCompleta: 'https://www.prensalibre.com/Agenda/Cine-y-Teatro/JUL18-Teatro-comediantes-vrd',
-        fecha: {
-            valorCompleto: '06/07/2018 8:30:00 p. m.',
-            sinHora: '06/07/2018',
-            dia: '6',
-            mes: {
-                mes: '7',
-                nombre: 'Jul'
-            },
-            anio: '2018',
-            hora: '20',
-            minuto: '30'
-        },
-        promocion: true,
-        hoy: true
-    }
-}
 
 function obtenerEventos()
 {
     var fechaSeleccionada = $("#fecha-inicio-desk").val();
     var textoBusqueda = $("#txt-buscar-mobile").val();
-    var jqxhr = $.get(urlService, { filtro: filtroEventos, pagina:pagina, eventosPorPagina:eventosPorPagina, fecha:fechaSeleccionada, texto:textoBusqueda })
+    var jqxhr = $.get(urlService, { categoria:obtenerCodigoCategoria, filtro: filtroEventos, pagina:pagina, eventosPorPagina:eventosPorPagina, fecha:fechaSeleccionada, texto:textoBusqueda })
     .done(function(data){
         if (data)
         {
@@ -134,8 +125,9 @@ function obtenerEventos()
                 });
             }
             else {
-                $("#wrapper-cards-eventos").html("");
+                $("#wrapper-cards-eventos").html("No se encontraron eventos.");
                 $("#paginacion-eventos").html("");
+                $("#paginacion-eventos").hide();
             }
         }
     })
@@ -328,4 +320,47 @@ function generarPaginacion(paginas)
         }
     });
 }
+
+var owlCarouselCategorias = $("#carousel-categorias");
+owlCarouselCategorias.owlCarousel({
+    loop:false,
+    margin:10,
+    nav:false,
+    dots: false,
+    responsive:{
+      0:{
+          items:1
+      },
+      768:{
+          items:4
+      }
+    }
+});
+
+$("#categorias-left .fa-chevron-left").on('click', function(){
+    $("#carousel-categorias").trigger('prev.owl.carousel');
+});
+
+$("#categorias-right .fa-chevron-right").on('click', function(){
+    $("#carousel-categorias").trigger('next.owl.carousel');
+});
+
+function mostrarCategoriaSeleccionada()
+{
+    var categoria = obtenerCodigoCategoria();
+    if (categoria)
+    {
+        var conf = urlsCategorias.find(x => { return x.codigo == categoria; });
+        if (conf != undefined && conf){
+            $("#" + conf.carousel).css("background-color", "#ecedef");
+            $("#" + conf.carousel).css("color", "#2c3240");
+            var srcImagen = $("#" + conf.carousel + " .img-categoria").attr("src");
+            $("#" + conf.carousel + " .img-categoria").attr("src", srcImagen.replace(".png", "_hover.png"));
+            
+            $("#carousel-categorias").trigger('to.owl.carousel', categoria - 1,500);
+        }
+    }
+}
+
+
 
