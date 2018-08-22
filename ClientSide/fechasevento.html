@@ -12,24 +12,108 @@
         <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="https://www.prensalibre.com/CMSScripts/jquery/jquery-cookie.js"></script>
         <script type="text/javascript" src="https://gnwebprensalibrerootwest.s3.amazonaws.com/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/clientSide/js/mustache.min.js"></script>
+        <style>
+            body, html { font-family: 'Ubuntu', sans-serif; }            
+            
+            /*INICIO COMUN*/
+            #modulo-fechas-evento #icono-calendario { color:#4783b2; }
+            #modulo-fechas-evento #fechasEventos { overflow-y:auto; }
+            #modulo-fechas-evento .fecha-evento { display:flex; width:100%; }
+            #modulo-fechas-evento .fecha-evento .dia-mes { width:50%; }
+            #modulo-fechas-evento .fecha-evento .hora { width:50%; color:#4783b2; }
+            /*FIN COMUN*/
+            
+            /*INICIO MOBILE*/
+            #modulo-fechas-evento #titulo { font-size:15px; font-weight:bold; }
+            #modulo-fechas-evento #fechasEventos { margin-top:7px; max-height:175px; }
+            #modulo-fechas-evento .fecha-evento { font-size:15px; margin-bottom:3px; display:flex; }
+            /*FIN MOBILE*/
+            
+            /*INICIO DESK*/
+            @media only screen and (min-width: 768px)
+            {
+                #modulo-fechas-evento #titulo { font-size:17px; font-weight:bold; }
+                #modulo-fechas-evento #fechasEventos { margin-top:14px; max-height:400px; }
+                #modulo-fechas-evento .fecha-evento { font-size:17px; margin-bottom:5px; }
+            }
+            /*FIN DESK*/
+        </style>
     </head>
     <body>
+        <br>
+        <div class="wrapper">
+            <div class="row g">
+                <div class="gi two-thirds">
+                    <div id="modulo-proxima-fecha">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="gi one-third">
+                    <div id="modulo-fechas-evento">
+                        <script id="template-fechas-evento" type="x-tmpl-mustache">
+                            <div class='fecha-evento'>
+                                <span class='dia-mes'>
+                                    {{fechaInicio.diaSemana}}
+                                    {{fechaInicio.dia}}
+                                    {{fechaInicio.mes.nombre}}
+                                </span>
+                                <span class='hora'>
+                                    {{fechaInicio.horaCompleta}}
+                                </span>
+                            </div>
+                        </script>
+                        <div id="titulo">
+                            <span id="icono-calendario" class="far fa-calendar-alt"></span>
+                            Otras fechas:
+                        </div>
+                        <div id="fechasEventos">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script type="text/javascript">
-            $(document).ready(function(){
-                
-            });
+            var development = true;
+            var urlService = "//" + window.location.host + "/TiempoLibreServiceV2";
+            if (development)
+                urlService = "https://gnw.prensalibre.com/TiempoLibreServiceV2";
             
-            function obtenerFechasEvento()
+            var templateFechasEventos = $('#template-fechas-evento').html();
+            Mustache.parse(templateFechasEventos);
+            
+            
+            if (development)
+                obtenerFechasEvento("/Agenda/Cine-y-Teatro/JUL18-Teatro-comediantes-vrd");
+            else
             {
-                var jqxhr = $.get(urlService, { filtro: "evento", urlEvento:"" })
+                var urlEvento = obtenerUrlEvento();
+                if (urlEvento != undefined && urlEvento != "")
+                    obtenerFechasEvento(urlEvento);    
+            }
+            
+            function obtenerFechasEvento(pUrlEvento)
+            {
+                $("#fechasEventos").html();
+                var jqxhr = $.get(urlService, { filtro: "evento", urlEvento:pUrlEvento })
                 .done(function(data){
                     if (data)
                     {
                         if (data.eventos.length > 0)
-                        {
+                        {    
                             var totalEventos = data.total;
-                            data.eventos.forEach(function(evento){
-                                
+                            data.eventos.forEach(function(fechaEvento, index)
+                            {
+                                if (index == 0){
+                                    
+                                }
+                                else
+                                {
+                                    var htmlFechaEvento = Mustache.render(templateFechasEventos, fechaEvento);
+                                    var htmlActualFechas = $("#fechasEventos").html();
+                                    $("#fechasEventos").html(htmlActualFechas + htmlFechaEvento);
+                                }
                             });
                         }
                         else 
@@ -44,6 +128,23 @@
                 .always(function(){
                     
                 });
+            }
+            
+            function obtenerUrlEvento()
+            {
+                
+                var resultado = "";
+                var href = window.location.href;
+                if (href != undefined && href) {
+                    var indiceMenor = href.indexOf("/Agenda/");
+                    if (indiceMenor > -1){
+                        var urlEvento = href.substring(indiceMenor);
+                        if (urlEvento != undefined && urlEvento){
+                            resultado = urlEvento;
+                        }
+                    }
+                }
+                return resultado;
             }
         </script>
     </body>
