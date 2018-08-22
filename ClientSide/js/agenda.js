@@ -91,6 +91,7 @@ function obtenerEventos()
             {
                 //if ($("#paginacion-eventos").html().trim() == "")
                 {
+                    $("#paginacion-eventos").show();
                     var totalEventos = data.total;
                     var totalPaginas = Math.ceil(totalEventos / eventosPorPagina);
                     console.log("Eventos encontrados:" + totalEventos, ", paginas:" + totalPaginas);
