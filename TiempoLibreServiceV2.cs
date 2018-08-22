@@ -3,106 +3,114 @@
 
 <script runat="server">
 protected override void OnLoad(EventArgs e)
-{
+{ 
     base.OnLoad(e);
     Response.Clear();
+    Response.ContentType = "application/json; charset=utf-8";
     Response.AddHeader("Access-Control-Allow-Origin", "http://172.22.2.135");
     //Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
     //Response.AddHeader("Access-Control-Allow-Origin", "http://192.168.1.159");
-    Response.ContentType = "application/json; charset=utf-8";
-    
-    var listaEventos = new System.Collections.Generic.List<object>();    
-    
-    var zona = this.FindZone("zoneData");
-    if (zona != null)
+
+    try
     {
-      this.ProcesarFechasNormales(listaEventos);
-      this.ProcesaFechasRecurrentes(listaEventos);
-    }
-  
-    string pFiltro = Request.QueryString["filtro"];
-    string pFecha = Request.QueryString["fecha"];
-    string pTexto = Request.QueryString["texto"];
-    string pPagina = Request.QueryString["pagina"];
-    string pEventosPorPagina = Request.QueryString["eventosPorPagina"];
-    string pUrlEvento = Request.QueryString["urlEvento"];
-    string pCategoria = Request.QueryString["categoria"];
-  
-    if (!string.IsNullOrEmpty(pFiltro))
-    {
-        DateTime ahorita = System.DateTime.Now;
-        DateTime inicio = new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 0, 0, 0);
+        string pFiltro = Request.QueryString["filtro"];
+        string pFecha = Request.QueryString["fecha"];
+        string pTexto = Request.QueryString["texto"];
+        string pPagina = Request.QueryString["pagina"];
+        string pEventosPorPagina = Request.QueryString["eventosPorPagina"];
+        string pUrlEvento = Request.QueryString["urlEvento"];
+        string pCategoria = Request.QueryString["categoria"];
       
-        //Filtro por categorias
-        if (pFiltro == "todos" || pFiltro == "hoy" || pFiltro == "semana" || pFiltro == "mes")
+        var listaEventos = new System.Collections.Generic.List<object>();    
+        
+        var zona = this.FindZone("zoneData");
+        if (zona != null)
         {
-            listaEventos = listaEventos.Where((dynamic x) => { return x.codigosCategorias.ToString().Contains(pCategoria); }).ToList();
+          this.ProcesarFechasNormales(listaEventos);
+          this.ProcesaFechasRecurrentes(listaEventos);
         }
       
-        if (pFiltro == "hoy")
+        if (!string.IsNullOrEmpty(pFiltro))
         {
-            DateTime fin = new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 23, 59, 59);
-            listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= inicio && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
-        }
-        else if (pFiltro == "semana")
-        {
-            DateTime fin = inicio.AddDays(7);
-            fin = new DateTime(fin.Year, fin.Month, fin.Day, 23, 59, 59);
-            listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= inicio && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
-        }
-        else if (pFiltro == "mes")
-        {
-            DateTime fin = inicio.AddDays(30);
-            fin = new DateTime(fin.Year, fin.Month, fin.Day, 23, 59, 59);
-            listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= inicio && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
-        }
-        else if (pFiltro == "fecha")
-        {
-            DateTime fecha;
-            if (!string.IsNullOrEmpty(pFecha) && DateTime.TryParse(pFecha, out fecha))
+            DateTime ahorita = System.DateTime.Now;
+            DateTime inicio = new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 0, 0, 0);
+          
+            //Filtro por categorias
+            if (pFiltro == "todos" || pFiltro == "hoy" || pFiltro == "semana" || pFiltro == "mes")
             {
-                if (fecha >= new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 0, 0, 0))
+                if (!string.IsNullOrEmpty(pCategoria))
+                  listaEventos = listaEventos.Where((dynamic x) => { return x.codigosCategorias.ToString().Contains(pCategoria); }).ToList();
+            }
+          
+            if (pFiltro == "hoy")
+            {
+                DateTime fin = new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 23, 59, 59);
+                listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= inicio && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
+            }
+            else if (pFiltro == "semana")
+            {
+                DateTime fin = inicio.AddDays(7);
+                fin = new DateTime(fin.Year, fin.Month, fin.Day, 23, 59, 59);
+                listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= inicio && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
+            }
+            else if (pFiltro == "mes")
+            {
+                DateTime fin = inicio.AddDays(30);
+                fin = new DateTime(fin.Year, fin.Month, fin.Day, 23, 59, 59);
+                listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= inicio && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
+            }
+            else if (pFiltro == "fecha")
+            {
+                DateTime fecha;
+                if (!string.IsNullOrEmpty(pFecha) && DateTime.TryParse(pFecha, out fecha))
                 {
-                    DateTime fin = new DateTime(fecha.Year, fecha.Month, fecha.Day, 23, 59, 59);
-                    listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= fecha && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
+                    if (fecha >= new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 0, 0, 0))
+                    {
+                        DateTime fin = new DateTime(fecha.Year, fecha.Month, fecha.Day, 23, 59, 59);
+                        listaEventos = listaEventos.Where((dynamic x) => { return (DateTime)x.fechaInicio.valor >= fecha && (DateTime)x.fechaFinal.valor <= fin; }).ToList();
+                    }
                 }
             }
+            else if (pFiltro == "busqueda")
+            {
+                if (!string.IsNullOrEmpty(pTexto))
+                    listaEventos = listaEventos.Where((dynamic x) => { return x.titulo.ToString().ToLower().Contains(pTexto.ToLower()) | x.resumen.ToString().ToLower().Contains(pTexto.ToLower()); }).ToList();
+            }
+            else if (pFiltro == "evento")
+            {
+                if (!string.IsNullOrEmpty(pUrlEvento))
+                    listaEventos = listaEventos.Where((dynamic x) => { return x.urlEvento.ToString().ToLower() == pUrlEvento.ToLower(); }).ToList();
+            }
         }
-        else if (pFiltro == "busqueda")
-        {
-            if (!string.IsNullOrEmpty(pTexto))
-                listaEventos = listaEventos.Where((dynamic x) => { return x.titulo.ToString().ToLower().Contains(pTexto.ToLower()) | x.resumen.ToString().ToLower().Contains(pTexto.ToLower()); }).ToList();
-        }
-        else if (pFiltro == "evento")
-        {
-            if (!string.IsNullOrEmpty(pUrlEvento))
-                listaEventos = listaEventos.Where((dynamic x) => { return x.urlEvento.ToString().ToLower() == pUrlEvento.ToLower(); }).ToList();
-        }
-    }
-
-    int totalEventos = listaEventos.Count();
     
-    int pagina;
-    if (!int.TryParse(pPagina, out pagina))
-        pagina = 1;
-
-    int eventosPorPagina;
-    if (!int.TryParse(pEventosPorPagina, out eventosPorPagina))
-        eventosPorPagina = totalEventos;
-  
-    var cadenaJson = Newtonsoft.Json.JsonConvert.SerializeObject(new 
+        int totalEventos = listaEventos.Count();
+        
+        int pagina;
+        if (!int.TryParse(pPagina, out pagina))
+            pagina = 1;
+    
+        int eventosPorPagina;
+        if (!int.TryParse(pEventosPorPagina, out eventosPorPagina))
+            eventosPorPagina = totalEventos;
+      
+        var cadenaJson = Newtonsoft.Json.JsonConvert.SerializeObject(new 
+        {
+            filtro = pFiltro,
+            fecha = pFecha,
+            texto = pTexto,
+            total = totalEventos,
+            pagina = pPagina,
+            eventosPorPagina = pEventosPorPagina,
+            categoria = pCategoria,
+            eventos = this.paginarResultado(listaEventos.OrderBy((dynamic x) => { return x.fechaInicio.valor; }).ToList(), pagina, eventosPorPagina),
+            ServerDateTime = System.DateTime.Now.ToString()
+        });
+        Response.Write(cadenaJson);
+    }
+    catch (Exception error)
     {
-        filtro = pFiltro,
-        fecha = pFecha,
-        texto = pTexto,
-        total = totalEventos,
-        pagina = pPagina,
-        eventosPorPagina = pEventosPorPagina,
-        categoria = pCategoria,
-        eventos = this.paginarResultado(listaEventos.OrderBy((dynamic x) => { return x.fechaInicio.valor; }).ToList(), pagina, eventosPorPagina),
-        ServerDateTime = System.DateTime.Now.ToString()
-    });
-    Response.Write(cadenaJson);
+        Response.Write("{ \"mensajeError\": \"" + error.Message + "\" }");
+    }
     Response.End();
 }
   
@@ -224,7 +232,7 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
     {
         if (fila != null)
         {
-            var rowNumberValor = fila["rowNumber"].ToString();
+            var rowNumberValor = "1";
             var tituloValor = fila["Titulo"].ToString();
             var tituloLimitedValor = CMS.GlobalHelper.TextHelper.LimitLength(fila["Titulo"].ToString(), 50, "...", true);
             var resumenValor = fila["Resumen"].ToString();
