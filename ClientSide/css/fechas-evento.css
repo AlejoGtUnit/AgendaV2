@@ -1,0 +1,32 @@
+/*INICIO COMUN*/
+#modulo-fecha-mas-proxima #dia-semana { font-weight:bold; }
+#modulo-fecha-mas-proxima #dia { font-weight:bold; }
+#modulo-fecha-mas-proxima #mes { font-weight:bold; }
+#modulo-fecha-mas-proxima #hora { color:#000000; }
+#modulo-fecha-mas-proxima #ver-mas-fechas-evento { color:#757575; }
+#modulo-fechas-evento #icono-calendario { color:#4783b2; }
+#modulo-fechas-evento #fechasEventos { overflow-y:auto; }
+#modulo-fechas-evento .fecha-evento { display:flex; width:100%; }
+#modulo-fechas-evento .fecha-evento .dia-mes { width:50%; }
+#modulo-fechas-evento .fecha-evento .hora { width:50%; color:#4783b2; }
+/*FIN COMUN*/
+
+/*INICIO MOBILE*/
+#modulo-fecha-mas-proxima #fecha-mas-proxima { font-size:18px; }
+#modulo-fecha-mas-proxima #ver-mas-fechas-evento { font-size:14px; margin-top:4px; }
+#modulo-fechas-evento #titulo { font-size:15px; font-weight:bold; }
+#modulo-fechas-evento #fechasEventos { margin-top:15px; max-height:175px; }
+#modulo-fechas-evento .fecha-evento { font-size:15px; margin-bottom:7px; display:flex; }
+/*FIN MOBILE*/
+
+/*INICIO DESK*/
+@media only screen and (min-width: 768px)
+{
+    #modulo-fecha-mas-proxima #fecha-mas-proxima { font-size:25px; }
+    #modulo-fecha-mas-proxima #ver-mas-fechas-evento { font-size:17px; margin-top:8px; }
+    #modulo-fecha-mas-proxima .fa-chevron-right { font-size:13px; }
+    #modulo-fechas-evento #titulo { font-size:17px; font-weight:bold; }
+    #modulo-fechas-evento #fechasEventos { margin-top:15px; max-height:400px; }
+    #modulo-fechas-evento .fecha-evento { font-size:17px; margin-bottom:8px; }
+}
+/*FIN DESK*/
