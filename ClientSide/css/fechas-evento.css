@@ -12,6 +12,7 @@
 /*FIN COMUN*/
 
 /*INICIO MOBILE*/
+#modulo-fecha-mas-proxima { margin-top:10px; }
 #modulo-fecha-mas-proxima #fecha-mas-proxima { font-size:18px; }
 #modulo-fecha-mas-proxima #ver-mas-fechas-evento { font-size:14px; margin-top:4px; }
 #modulo-fechas-evento #titulo { font-size:15px; font-weight:bold; }
@@ -22,9 +23,11 @@
 /*INICIO DESK*/
 @media only screen and (min-width: 768px)
 {
+    #modulo-fecha-mas-proxima { margin-top:15px; }
     #modulo-fecha-mas-proxima #fecha-mas-proxima { font-size:25px; }
     #modulo-fecha-mas-proxima #ver-mas-fechas-evento { font-size:17px; margin-top:8px; }
     #modulo-fecha-mas-proxima .fa-chevron-right { font-size:13px; }
+    #modulo-fechas-evento { padding-left:100px; }
     #modulo-fechas-evento #titulo { font-size:17px; font-weight:bold; }
     #modulo-fechas-evento #fechasEventos { margin-top:15px; max-height:400px; }
     #modulo-fechas-evento .fecha-evento { font-size:17px; margin-bottom:8px; }
