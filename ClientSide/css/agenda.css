@@ -5,7 +5,7 @@ body { font-family: 'Ubuntu', sans-serif; }
 
 
 /*INICIO COMUN*/
-#paginacion-eventos { background-color:#FFF; width:100%; display:flex; justify-content:center; align-items:center; }
+#paginacion-eventos { background-color:#FFF; width:100%; display:flex; justify-content:center; align-items:center; flex-wrap:wrap; }
 .pagina-eventos { cursor:pointer; color:#757575; font-weight:bold; }
 .pagina-eventos.active { color:#4783b2; }
 /*FIN COMUN*/

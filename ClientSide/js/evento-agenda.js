@@ -70,3 +70,8 @@ $(document).ready(function(){
     
     mostrarCategoriaSeleccionada();
 });
+
+$("#btn-compartir-evento").on('click', function(){
+    $(".opcion-compartir").toggle();
+});
+                              

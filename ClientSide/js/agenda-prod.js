@@ -1,6 +1,6 @@
 var pagina = 1;
-var eventosPorPagina = 12;
-var development = false;
+var eventosPorPagina = 36;
+var development = true;
 var filtroEventos = 'todos'; //todos,hoy,semana,mes,fecha,busqueda
 var urlsCategorias = 
 [   

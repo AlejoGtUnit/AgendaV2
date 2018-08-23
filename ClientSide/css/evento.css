@@ -1,0 +1,18 @@
+/*ESTILO DEL EVENTO Ejemplo: prensalibre.com/Agenda/Exposiciones-y-convenciones/Exposicion-Maribel-Saravia */
+
+/*INICIO COMUN*/
+body, html { font-family: 'Ubuntu', sans-serif; }
+#contenedor-modulo-otros-eventos { width:100%; background-color:#ecedef; }
+/*FIN COMUN*/
+
+/*INICIO MOBILE*/
+#contenedor-contactar-publicar-footer { width:100%; background-color:#ecedef; }
+background-color: #ecedef;
+/*FIN MOBILE*/
+
+/*INICIO DESK*/
+@media only screen and (min-width: 768px) 
+{
+    
+}
+/*FIN DESK*/
