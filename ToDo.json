@@ -1,4 +1,12 @@
-{
-    "GA Events": false,
-    "Validacion GA Eventos": false,
-}
+ToDO:
+[
+    { "nombre": "Agregar eventos de GA", "estado": "pendiente", "prioridad": "Alta" },
+    { "nombre": "Validacion de eventos de GA con Byron", "estado": "pendiente", "prioridad": "Media-Alta" },
+    { "nombre": "Optimizar tiempo de respuesta de TiempoLibreServiceV2", "estado": "pendiente", "prioridad": "Alta" },
+    { "nombre": "Formulario de contacto", "estado": "pendiente", "prioridad": "Alta" },
+    { "nombre": "Formulario de Publique su evento", "estado": "pendiente", "prioridad": "Alta" },
+    { "nombre": "Bug de momentJs en Firefox Mobile", "estado": "pendiente", "prioridad": "Alta" },
+    { "nombre": "Bug de visualizacion de select de filtro en mobile firefox", "estado": "pendiente", "prioridad": "Media" },
+    { "nombre": "Mejor paginacion especialmente en movil", "estado": "pendiente", "prioridad": "media" },
+    { "nombre": "Quitar o mejor PaceJs", "estado": "pendiente", "prioridad": "Alta" }
+]
