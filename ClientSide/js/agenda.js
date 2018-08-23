@@ -119,11 +119,18 @@ function obtenerEventos()
                 eventosHoyDesordenados = eventosHoy.map((a) => ({sort: Math.random(), value: a})).sort((a, b) => a.sort - b.sort).map((a) => a.value);
                 
                 $("#wrapper-cards-eventos").html("");
-                eventosHoyDesordenados.concat(eventosNoHoy).forEach(function(eventoItem, index){
+                /*eventosHoyDesordenados.concat(eventosNoHoy).forEach(function(eventoItem, index){
                     var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
                     var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, eventoItem);
                     $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
-                });
+                });*/
+                
+                var eventosUnidos = eventosHoyDesordenados.concat(eventosNoHoy);
+                for (var x= 0; x < eventosUnidos.length; x++){
+                    var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
+                    var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, eventosUnidos[x]);
+                    $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
+                }
             }
             else {
                 $("#wrapper-cards-eventos").html("No se encontraron eventos.");
