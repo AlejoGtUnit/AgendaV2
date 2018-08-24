@@ -8,8 +8,8 @@ protected override void OnLoad(EventArgs e)
     Response.Clear();
     Response.ContentType = "application/json; charset=utf-8";
     Response.AddHeader("Access-Control-Allow-Origin", "http://172.22.2.135");
-    //Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
-    //Response.AddHeader("Access-Control-Allow-Origin", "http://192.168.1.159");
+    Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
+    Response.AddHeader("Access-Control-Allow-Origin", "http://192.168.1.159");
 
     try
     {
@@ -124,7 +124,7 @@ private void ProcesarFechasNormales(System.Collections.Generic.List<object> resu
         qdsFechas.OrderBy = "F.FechaInicio ASC, F.FechaFinal ASC";
         qdsFechas.Columns = "F.*, E.*, TE.DocumentUrlPath";
         qdsFechas.WhereCondition = "1=1";
-        qdsFechas.SelectTopN = 500;
+        qdsFechas.SelectTopN = 250;
     }
 
     CMSWebParts_Viewers_Basic_BasicRepeater repetidorFechas = (CMSWebParts_Viewers_Basic_BasicRepeater)zona.FindControl("BR_Fechas");
@@ -176,7 +176,7 @@ private void ProcesaFechasRecurrentes(System.Collections.Generic.List<object> re
         qdsFechasRecurrentes.OrderBy = "FR.FechaInicio ASC, FR.FechaFinal ASC";
         qdsFechasRecurrentes.Columns = "FR.*, E.*, TE.DocumentUrlPath";
         qdsFechasRecurrentes.WhereCondition = "1=1";
-        qdsFechasRecurrentes.SelectTopN = 500;
+        qdsFechasRecurrentes.SelectTopN = 250;
     }
     CMSWebParts_Viewers_Basic_BasicRepeater repetidorFechasRecurrentes = (CMSWebParts_Viewers_Basic_BasicRepeater)zona.FindControl("BR_FechasRecurrentes");
     if (repetidorFechasRecurrentes != null)
@@ -241,12 +241,13 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
             var urlEventoCompletaValor = CMS.GlobalHelper.URLHelper.GetAbsoluteUrl(string.Format("~{0}", fila["DocumentUrlPath"]));
             var fechaInicioValor = ObtenerFecha(fechaInicio);
             var fechaFinalValor = ObtenerFecha(fechaFinal);
-            var imagenSmallValor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "383", "216", string.Empty);
-            var imagenSmall4_3Valor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "288", "216", string.Empty);
-            var imagenHorizontal_Valor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "885", "500", string.Empty);
-            var imagenSmallFullSizeValor = GSIFunctions.GetGSIImageURLGUID(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "auto", "auto", string.Empty);
-            if (!string.IsNullOrEmpty(imagenSmallFullSizeValor) && imagenSmallFullSizeValor.IndexOf("http://gnw.") == -1)
-                imagenSmallFullSizeValor = imagenSmallFullSizeValor.Replace("http://", "https://");
+            var thumbnailGUIDValor = CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty);
+            //var imagenSmallValor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "383", "216", string.Empty);
+            //var imagenSmall4_3Valor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "288", "216", string.Empty);
+            //var imagenHorizontal_Valor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "885", "500", string.Empty);
+            //var imagenSmallFullSizeValor = GSIFunctions.GetGSIImageURLGUID(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "auto", "auto", string.Empty);
+            //if (!string.IsNullOrEmpty(imagenSmallFullSizeValor) && imagenSmallFullSizeValor.IndexOf("http://gnw.") == -1)
+            //    imagenSmallFullSizeValor = imagenSmallFullSizeValor.Replace("http://", "https://");
             var codigosCategoriasValor = fila["Categorias"].ToString();
             var hoyValor = System.DateTime.Now.ToShortDateString() == fechaInicio.ToShortDateString();
             var promocionValor = !string.IsNullOrEmpty(fila["UrlTicket"].ToString());
@@ -265,10 +266,12 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
                 fechaFinal = fechaFinalValor,
                 hoy = hoyValor,
                 promocion = promocionValor,
-                imagenSmall = imagenSmallValor,
-                imagenSmall4_3 = imagenSmall4_3Valor,
-                imagenHorizontal = imagenHorizontal_Valor,
-                imagenFullSize = imagenSmallFullSizeValor
+                thumbnailGUID = thumbnailGUIDValor
+                //imagenSmall = imagenSmallValor
+                //imagenSmall = ""
+                //imagenSmall4_3 = imagenSmall4_3Valor,
+                //imagenHorizontal = imagenHorizontal_Valor,
+                //imagenFullSize = imagenSmallFullSizeValor
             };
         }
     }
@@ -277,6 +280,27 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
         resultado = new { error = ex.Message };
     }
     return resultado;
+}
+          
+protected object ClonarObjetoEvento(dynamic entrada)
+{
+    return new
+    {
+        rowNumber = entrada.rowNumber,
+        titulo = entrada.titulo,
+        tituloLimited = entrada.tituloLimited,
+        resumen = entrada.resumen,
+        resumenLimited = entrada.resumenLimited,
+        urlEvento = entrada.urlEvento,
+        urlEventoCompleta = entrada.urlEventoCompleta,
+        codigosCategorias = entrada.codigosCategorias,
+        fechaInicio = entrada.fechaInicio,
+        fechaFinal = entrada.fechaFinal,
+        hoy = entrada.hoy,
+        promocion = entrada.promocion,
+        thumbnailGUID = entrada.thumbnailGUID,
+        imagenSmall = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(entrada.thumbnailGUID, "cms.eventotiempolibre.pl_tiempolibreevento_grande", "383", "216", string.Empty)
+    };
 }
                                                
 protected object ObtenerFecha(object entrada)
@@ -315,7 +339,9 @@ protected List<object> paginarResultado(List<object> entrada, int pagina, int ev
     for (var x=0; x < entrada.Count; x++)
     {
         if (x >= indexMenor && x <= indexMayor)
-            resultado.Add(entrada[x]);
+        {
+            resultado.Add(ClonarObjetoEvento(entrada[x]));
+        }
     }
     return resultado;
 }
@@ -339,6 +365,10 @@ private class FechaAgenda
         {
             if (FechaInicio < FechaFinal)
             {
+                var ahorita = System.DateTime.Now;
+                if (FechaInicio < ahorita)
+                    FechaInicio = new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, FechaInicio.Hour, FechaInicio.Minute, FechaInicio.Second);
+              
                 var eventos = int.Parse(Math.Ceiling((FechaFinal - FechaInicio).TotalDays).ToString());
 
                 for (var x = 0; x < eventos; x++)
@@ -347,7 +377,7 @@ private class FechaAgenda
                     var subFechaInicio = FechaInicio.AddDays(x);
                     var subFechaFinal = FechaFinal.AddDays(x - (eventos - 1));
                     
-                    var ahorita = System.DateTime.Now;
+                    //var ahorita = System.DateTime.Now;
                     if (subFechaFinal > new DateTime(ahorita.Year, ahorita.Month, ahorita.Day, 0, 0, 0))
                     {
                         resultado.Add(new FechaAgenda(subFechaInicio, subFechaFinal)
