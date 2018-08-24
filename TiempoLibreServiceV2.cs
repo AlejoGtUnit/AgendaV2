@@ -8,8 +8,8 @@ protected override void OnLoad(EventArgs e)
     Response.Clear();
     Response.ContentType = "application/json; charset=utf-8";
     Response.AddHeader("Access-Control-Allow-Origin", "http://172.22.2.135");
-    Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
-    Response.AddHeader("Access-Control-Allow-Origin", "http://192.168.1.159");
+    //Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
+    //Response.AddHeader("Access-Control-Allow-Origin", "http://192.168.1.159");
 
     try
     {
@@ -75,6 +75,18 @@ protected override void OnLoad(EventArgs e)
             {
                 if (!string.IsNullOrEmpty(pTexto))
                     listaEventos = listaEventos.Where((dynamic x) => { return x.titulo.ToString().ToLower().Contains(pTexto.ToLower()) | x.resumen.ToString().ToLower().Contains(pTexto.ToLower()); }).ToList();
+              
+                /*if (!string.IsNullOrEmpty(pTexto))
+                {
+                    if (pTexto.Split(' ').Length == 1)
+                        listaEventos = listaEventos.Where((dynamic x) => 
+                        {
+                            return SimplificarTexto(x.titulo.ToString()).Split(" ").ToList().Contains(SimplificarTexto(pTexto))
+                                | SimplificarTexto(x.resumen.ToString()).Split(" ").ToList().Contains(SimplificarTexto(pTexto));
+                        }).ToList();
+                    else
+                        listaEventos = listaEventos.Where((dynamic x) => { return SimplificarTexto(x.titulo.ToString()).Contains(SimplificarTexto(pTexto)) | SimplificarTexto(x.resumen.ToString()).Contains(SimplificarTexto(pTexto)); }).ToList();
+                }*/
             }
             else if (pFiltro == "evento")
             {
@@ -112,6 +124,14 @@ protected override void OnLoad(EventArgs e)
         Response.Write("{ \"mensajeError\": \"" + error.Message + "\" }");
     }
     Response.End();
+}
+          
+protected string SimplificarTexto(string entrada)
+{
+    string resultado = string.Empty;
+    if (!string.IsNullOrEmpty(entrada))
+        resultado = entrada.ToLower().Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u');
+    return resultado;
 }
   
 private void ProcesarFechasNormales(System.Collections.Generic.List<object> resultado)
