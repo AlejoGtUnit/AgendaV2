@@ -83,6 +83,7 @@ function obtenerEventos()
 {
     var fechaSeleccionada = $("#fecha-inicio-desk").val();
     var textoBusqueda = $("#txt-buscar-mobile").val();
+    
     var jqxhr = $.get(urlService, { categoria:obtenerCodigoCategoria, filtro: filtroEventos, pagina:pagina, eventosPorPagina:eventosPorPagina, fecha:fechaSeleccionada, texto:textoBusqueda })
     .done(function(data){
         if (data)
@@ -96,16 +97,16 @@ function obtenerEventos()
                     var totalPaginas = Math.ceil(totalEventos / eventosPorPagina);
                     console.log("Eventos encontrados:" + totalEventos, ", paginas:" + totalPaginas);
                     generarPaginacion(totalPaginas);
-                    
+
                     if (data.pagina != undefined && data.pagina)
                         $(".pagina-eventos[data-pagina=" + data.pagina + "]").addClass("active");
                 }
-                
+
                 var cadenaHoy = moment().format("DD/MM/YYYY");
                 var eventosHoy = [];
                 var eventosHoyDesordenados = [];
                 var eventosNoHoy = [];
-                
+
                 for (var x = 0; x < data.eventos.length; x++)
                 {
                     if (data.eventos[x].fechaInicio.sinHora == cadenaHoy){
@@ -115,16 +116,16 @@ function obtenerEventos()
                         eventosNoHoy.push(data.eventos[x]);
                     }
                 }                
-                
+
                 eventosHoyDesordenados = eventosHoy.map((a) => ({sort: Math.random(), value: a})).sort((a, b) => a.sort - b.sort).map((a) => a.value);
-                
+
                 $("#wrapper-cards-eventos").html("");
                 /*eventosHoyDesordenados.concat(eventosNoHoy).forEach(function(eventoItem, index){
                     var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
                     var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, eventoItem);
                     $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
                 });*/
-                
+
                 var eventosUnidos = eventosHoyDesordenados.concat(eventosNoHoy);
                 for (var x= 0; x < eventosUnidos.length; x++){
                     var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
@@ -188,7 +189,7 @@ $("#btn-filtro-todos-desk, #btn-filtro-hoy-desk, #btn-filtro-semana-desk, #btn-f
             filtroEventos = 'semana';
             break;
         case "mes": 
-            filtroEventos = 'mes'
+            filtroEventos = 'mes';
             break;
     }
     mostrarSeleccionFiltro();
@@ -235,8 +236,8 @@ $("#fecha-inicio-mobile").on('change', function(){
     
     pagina = 1;
     obtenerEventos();
-    mostrarSeleccionFiltro();
-})
+    mostrarSeleccionFiltro(); 
+});
 
 function mostrarSeleccionFiltro()
 {
@@ -371,6 +372,3 @@ function mostrarCategoriaSeleccionada()
         }
     }
 }
-
-
-
