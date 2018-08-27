@@ -1,0 +1,58 @@
+/*INICIO COMUN*/
+#modulo-otros-eventos { font-family:'Ubuntu', sans-serif; }
+#modulo-otros-eventos #nav-otros-eventos { margin-bottom:15px; display:block; }
+#modulo-otros-eventos h3 { text-align:center; }
+#modulo-otros-eventos .owl-prev { color:#4783b2; display:inline-block; cursor:pointer; }
+#modulo-otros-eventos .owl-next { color:#4783b2; display:inline-block; float:right; cursor:pointer; }
+#modulo-otros-eventos .owl-prev.disabled { color:gray; cursor:inherit; }
+#modulo-otros-eventos .owl-next.disabled { color:gray; cursor:inherit; }
+#modulo-otros-eventos .fa-caret-square-left.disabled { color:#4783b2; }
+#modulo-otros-eventos .fa-caret-square-right.disabled { color:#4783b2; }
+#modulo-otros-eventos .otro-evento { box-shadow: 2px 2px 2px 2px rgba(0,0,0,.08); }
+#modulo-otros-eventos .info-otro-evento { color:#757575; }
+#modulo-otros-eventos .titulo { color:#4783b2; font-weight:bold; }
+#modulo-otros-eventos .imagen-otro-evento { position:relative; }
+#modulo-otros-eventos .hoy { position:absolute; top:0; right:0; background-color:#4783b2; color:#FFF; }
+#modulo-otros-eventos .info-otro-evento { display:flex; flex-wrap:wrap; }
+#modulo-otros-eventos .owl-dot.active span { background-color:#4783b2; }
+#modulo-otros-eventos .contenedor-info { min-height:150px; }
+#modulo-otros-eventos .owl-dots { margin-top:15px; }
+/*FIN COMUN*/
+
+/*INICIO MOBILE*/
+#modulo-otros-eventos .fa-caret-square-left { font-size:25px; }
+#modulo-otros-eventos .fa-caret-square-right { font-size:25px; }
+#modulo-otros-eventos .owl-item { min-height:360px; }
+#modulo-otros-eventos .otro-evento { min-height:350px; }
+#modulo-otros-eventos .hoy { font-size:12px; padding:2px 6px; }
+#modulo-otros-eventos .info-otro-evento { padding:20px 12px; font-size:12px; }
+#modulo-otros-eventos .fecha { width:100%; text-align:left; font-size:17px; margin-bottom:12px; }
+#modulo-otros-eventos .dia-semana { display:inline-block; }
+#modulo-otros-eventos .mes { display:inline-block; font-weight:bold; }
+#modulo-otros-eventos .dia { display:inline-block; font-weight:bold; }
+#modulo-otros-eventos .hora { display:inline-block; }
+#modulo-otros-eventos .titulo-resumen { width:100%; }
+#modulo-otros-eventos .titulo { font-size:17px; }
+#modulo-otros-eventos .resumen { font-size:15px; margin-top:7px; }
+/*FIN MOBILE*/
+
+/*INICIO DESK*/
+@media only screen and (min-width: 768px) 
+{
+    #modulo-otros-eventos #nav-otros-eventos { margin-bottom:30px; }
+    #modulo-otros-eventos .fa-caret-square-left { font-size:35px; }
+    #modulo-otros-eventos .fa-caret-square-right { font-size:35px; }
+    #modulo-otros-eventos .owl-item { min-height:380px; }
+    #modulo-otros-eventos .otro-evento { min-height:370px; }
+    #modulo-otros-eventos .hoy { font-size:16px; padding:3px 10px; }
+    #modulo-otros-eventos .info-otro-evento { padding:14px 15px; }
+    #modulo-otros-eventos .fecha { width:33%; text-align:center; font-size:21px; margin-bottom:0; }
+    #modulo-otros-eventos .dia-semana { display:block; }
+    #modulo-otros-eventos .mes { display:inline-block; }
+    #modulo-otros-eventos .dia { display:inline-block; }
+    #modulo-otros-eventos .hora { display:block; }
+    #modulo-otros-eventos .titulo-resumen { width:67%; }
+    #modulo-otros-eventos .titulo { font-size:19px; }
+    #modulo-otros-eventos .resumen { font-size:15px; margin-top:14px; }
+}
+/*FIN DESK*/

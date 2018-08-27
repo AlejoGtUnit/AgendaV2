@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link rel="stylesheet" href="https://d3ustg7s7bf7i9.cloudfront.net/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/OwlCarousel2-2.2.1/dist/assets/owl.carousel.min.css">
         <link rel="stylesheet" href="https://d3ustg7s7bf7i9.cloudfront.net/App_Themes/PL/assets/images/redaccion/TiempoLibre_Vertical/OwlCarousel2-2.2.1/dist/assets/owl.theme.default.min.css">
-        
+        <link rel="stylesheet" href="css/evento-otros-eventos.css">
         <!--Fin Css-->
         <!--Inicio Javascript-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -26,8 +26,38 @@
         <br>
         <form>
             <div class="wrapper">
-                <div class="gi one-whole">
-                
+                <div id="modulo-otros-eventos" class="gi one-whole">
+                    <script id="template-otro-evento" type="x-tmpl-mustache">
+                        <div class="otro-evento">
+                            <a href="{{urlEvento}}" target="_blank">
+                                <div class="imagen-otro-evento">
+                                    <img id="img-evento" src="{{imagenSmall}}" alt="">
+                                    {{#hoy}}
+                                        <div class="hoy">Hoy</div>
+                                    {{/hoy}}
+                                </div>
+                                <div class="contenedor-info">
+                                    <div class="info-otro-evento">
+                                        <div class="fecha">
+                                            <span class="dia-semana">{{fechaInicio.diaSemana}} </span>
+                                            <span class="mes">{{fechaInicio.mes.nombre}} </span>
+                                            <span class="dia">{{fechaInicio.dia}}</span>
+                                            <span class="hora">{{fechaInicio.horaCompleta}}</span>
+                                        </div>
+                                        <div class="titulo-resumen">
+                                            <div class="titulo">{{tituloLimited}}</div>
+                                            <div class="resumen">{{resumenLimited}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </script>
+                    <h3>Otros eventos</h3>
+                    <div id="nav-otros-eventos">
+                    </div>
+                    <div id="owl-carousel-otros-eventos" class="owl-carousel owl-theme">
+                    </div>
                 </div>
             </div>
         </form>

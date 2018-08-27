@@ -9,8 +9,9 @@ Mustache.parse(templateOtroEvento);
 
 function obtenerOtrosEventos()
 {
-    var jqxhr = $.get(urlService, { pagina:1, eventosPorPagina:24 })
-    .done(function(data){
+    var jqxhr = $.get(urlService, { pagina:1, eventosPorPagina:10 })
+    .done(function(data)
+    {
         if (data)
         {
             if (data.eventos.length > 0)
@@ -31,34 +32,48 @@ function obtenerOtrosEventos()
                 }                
                 
                 eventosHoyDesordenados = eventosHoy.map((a) => ({sort: Math.random(), value: a})).sort((a, b) => a.sort - b.sort).map((a) => a.value);
-                
-                $("#wrapper-cards-eventos").html("");
-                /*eventosHoyDesordenados.concat(eventosNoHoy).forEach(function(eventoItem, index){
-                    var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
-                    var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, eventoItem);
-                    $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
-                });*/
-                
                 var eventosUnidos = eventosHoyDesordenados.concat(eventosNoHoy);
-                for (var x= 0; x < eventosUnidos.length; x++){
-                    var htmlActualCardsEventos = $("#wrapper-cards-eventos").html();
-                    var htmlNuevoEvento = Mustache.render(templateCardEventoCuadrilla, eventosUnidos[x]);
-                    $("#wrapper-cards-eventos").html(htmlActualCardsEventos + htmlNuevoEvento);
+                
+                for (var x= 0; x < eventosUnidos.length; x++)
+                {
+                    var htmlActualOtrosEventos = $("#owl-carousel-otros-eventos").html();
+                    var htmlNuevoOtroEvento = Mustache.render(templateOtroEvento, eventosUnidos[x]);
+                    
+                    if (window.location.href != eventosUnidos[x].urlEventoCompleta)        
+                        $("#owl-carousel-otros-eventos").html(htmlActualOtrosEventos + htmlNuevoOtroEvento);
                 }
             }
-            else {
-                $("#wrapper-cards-eventos").html("No se encontraron eventos.");
-                $("#paginacion-eventos").html("");
-                $("#paginacion-eventos").hide();
-            }
         }
+
+        var owlCarouselOtrosEventos = $("#owl-carousel-otros-eventos");
+        owlCarouselOtrosEventos.owlCarousel({
+            loop:false,
+            margin:30,
+            nav:true,
+            dots: true,
+            responsive:{
+              0:{
+                  items:1,
+                  dots:false
+              },
+              600:{
+                  items:3
+              }
+            },
+            navContainer: "#nav-otros-eventos"
+        });   
+
+        $("#modulo-otros-eventos .owl-prev").html("<span class='far fa-caret-square-left'></span>");
+        $("#modulo-otros-eventos .owl-next").html("<span class='far fa-caret-square-right'></span>");
     })
     .fail(function(){
-        console.log("obtenerEventos()->Fail!");
+        console.log("obtenerOtrosEventos()->Fail!");
     })
     .always(function(){
-        $(".card-evento-cuadrilla .fa-share-alt").on('click', function(){
-            $(this).parents(".card-evento-cuadrilla").find(".opciones-compartir").toggle(350);
-        });
+        
     });
 }
+
+$(document).ready(function(){
+    obtenerOtrosEventos();
+});
