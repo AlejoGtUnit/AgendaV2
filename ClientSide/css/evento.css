@@ -2,12 +2,10 @@
 
 /*INICIO COMUN*/
 body, html { font-family: 'Ubuntu', sans-serif; }
-#contenedor-modulo-otros-eventos { width:100%; background-color:#ecedef; }
 /*FIN COMUN*/
 
 /*INICIO MOBILE*/
 #contenedor-contactar-publicar-footer { width:100%; background-color:#ecedef; }
-background-color: #ecedef;
 /*FIN MOBILE*/
 
 /*INICIO DESK*/

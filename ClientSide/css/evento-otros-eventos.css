@@ -1,7 +1,7 @@
 /*INICIO COMUN*/
 #modulo-otros-eventos { font-family:'Ubuntu', sans-serif; }
 #modulo-otros-eventos #nav-otros-eventos { margin-bottom:15px; display:block; }
-#modulo-otros-eventos h3 { text-align:center; }
+#modulo-otros-eventos h3 { text-align:center; color:#2c3240; }
 #modulo-otros-eventos .owl-prev { color:#4783b2; display:inline-block; cursor:pointer; }
 #modulo-otros-eventos .owl-next { color:#4783b2; display:inline-block; float:right; cursor:pointer; }
 #modulo-otros-eventos .owl-prev.disabled { color:gray; cursor:inherit; }
@@ -20,6 +20,7 @@
 /*FIN COMUN*/
 
 /*INICIO MOBILE*/
+#modulo-otros-eventos h3 { font-size:19px; }
 #modulo-otros-eventos .fa-caret-square-left { font-size:25px; }
 #modulo-otros-eventos .fa-caret-square-right { font-size:25px; }
 #modulo-otros-eventos .owl-item { min-height:360px; }
@@ -39,6 +40,7 @@
 /*INICIO DESK*/
 @media only screen and (min-width: 768px) 
 {
+    #modulo-otros-eventos h3 { font-size:24px; }
     #modulo-otros-eventos #nav-otros-eventos { margin-bottom:30px; }
     #modulo-otros-eventos .fa-caret-square-left { font-size:35px; }
     #modulo-otros-eventos .fa-caret-square-right { font-size:35px; }
