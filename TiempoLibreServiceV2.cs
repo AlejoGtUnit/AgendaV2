@@ -304,6 +304,12 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
           
 protected object ClonarObjetoEvento(dynamic entrada)
 {
+    var imageSmallValor = string.Empty;
+
+    string pFiltro = Request.QueryString["filtro"];
+    if (pFiltro != "evento")
+        imageSmallValor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(entrada.thumbnailGUID, "cms.eventotiempolibre.pl_tiempolibreevento_grande", "383", "216", string.Empty);
+          
     return new
     {
         rowNumber = entrada.rowNumber,
@@ -319,7 +325,7 @@ protected object ClonarObjetoEvento(dynamic entrada)
         hoy = entrada.hoy,
         promocion = entrada.promocion,
         thumbnailGUID = entrada.thumbnailGUID,
-        imagenSmall = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(entrada.thumbnailGUID, "cms.eventotiempolibre.pl_tiempolibreevento_grande", "383", "216", string.Empty)
+        imagenSmall = imageSmallValor
     };
 }
                                                
