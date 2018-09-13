@@ -74,24 +74,27 @@ protected override void OnLoad(EventArgs e)
             else if (pFiltro == "busqueda")
             {
                 if (!string.IsNullOrEmpty(pTexto))
-                    listaEventos = listaEventos.Where((dynamic x) => { return x.titulo.ToString().ToLower().Contains(pTexto.ToLower()) | x.resumen.ToString().ToLower().Contains(pTexto.ToLower()); }).ToList();
-              
-                /*if (!string.IsNullOrEmpty(pTexto))
                 {
                     if (pTexto.Split(' ').Length == 1)
-                        listaEventos = listaEventos.Where((dynamic x) => 
-                        {
-                            return SimplificarTexto(x.titulo.ToString()).Split(" ").ToList().Contains(SimplificarTexto(pTexto))
-                                | SimplificarTexto(x.resumen.ToString()).Split(" ").ToList().Contains(SimplificarTexto(pTexto));
+                    {
+                        //listaEventos = listaEventos.Where((dynamic x) => { return false; }).ToList();
+                        listaEventos = listaEventos.Where((dynamic x) => {
+                            string[] tituloSeparado = SimplificarTexto(x.titulo.ToString()).Split(' ');
+                            string[] resumenSeparado = SimplificarTexto(x.resumen.ToString()).Split(' ');
+                            string[] palabrasClaveSeparadas = SimplificarTexto(x.palabrasClave.ToString()).Split(' ');
+                            return tituloSeparado.Contains(SimplificarTexto(pTexto)) || resumenSeparado.Contains(SimplificarTexto(pTexto)) || palabrasClaveSeparadas.Contains(SimplificarTexto(pTexto));
                         }).ToList();
+                    }
                     else
-                        listaEventos = listaEventos.Where((dynamic x) => { return SimplificarTexto(x.titulo.ToString()).Contains(SimplificarTexto(pTexto)) | SimplificarTexto(x.resumen.ToString()).Contains(SimplificarTexto(pTexto)); }).ToList();
-                }*/
+                    {
+                        listaEventos = listaEventos.Where((dynamic x) => { return SimplificarTexto(x.titulo.ToString()).Contains(SimplificarTexto(pTexto)) || SimplificarTexto(x.resumen.ToString()).Contains(SimplificarTexto(pTexto)); }).ToList();
+                    }
+                }
             }
             else if (pFiltro == "evento")
             {
                 if (!string.IsNullOrEmpty(pUrlEvento))
-                    listaEventos = listaEventos.Where((dynamic x) => { return x.urlEvento.ToString().ToLower() == pUrlEvento.ToLower(); }).ToList();
+                    listaEventos = listaEventos.Where((dynamic x) => { return pUrlEvento.ToLower().StartsWith(x.urlEvento.ToString().ToLower()); }).ToList();
             }
         }
     
@@ -130,7 +133,7 @@ protected string SimplificarTexto(string entrada)
 {
     string resultado = string.Empty;
     if (!string.IsNullOrEmpty(entrada))
-        resultado = entrada.ToLower().Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u');
+        resultado = entrada.ToLower().Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u').Replace(".", string.Empty).Replace(",", string.Empty).Replace("\"","");
     return resultado;
 }
   
@@ -271,6 +274,7 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
             var codigosCategoriasValor = fila["Categorias"].ToString();
             var hoyValor = System.DateTime.Now.ToShortDateString() == fechaInicio.ToShortDateString();
             var promocionValor = !string.IsNullOrEmpty(fila["UrlTicket"].ToString());
+            var palabrasClaveValor = fila["PalabrasClave"].ToString();
 
             resultado = new
             {
@@ -286,7 +290,8 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
                 fechaFinal = fechaFinalValor,
                 hoy = hoyValor,
                 promocion = promocionValor,
-                thumbnailGUID = thumbnailGUIDValor
+                thumbnailGUID = thumbnailGUIDValor,
+                palabrasClave = palabrasClaveValor
                 //imagenSmall = imagenSmallValor
                 //imagenSmall = ""
                 //imagenSmall4_3 = imagenSmall4_3Valor,
@@ -325,6 +330,7 @@ protected object ClonarObjetoEvento(dynamic entrada)
         hoy = entrada.hoy,
         promocion = entrada.promocion,
         thumbnailGUID = entrada.thumbnailGUID,
+        palabrasClave = entrada.palabrasClave,
         imagenSmall = imageSmallValor
     };
 }
