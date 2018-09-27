@@ -96,6 +96,10 @@ protected override void OnLoad(EventArgs e)
                 if (!string.IsNullOrEmpty(pUrlEvento))
                     listaEventos = listaEventos.Where((dynamic x) => { return pUrlEvento.ToLower().StartsWith(x.urlEvento.ToString().ToLower()); }).ToList();
             }
+            else if (pFiltro == "portada")
+            {
+                listaEventos = listaEventos.Where((dynamic x) => { return Boolean.Parse(x.portada); }).ToList();    
+            }
         }
     
         int totalEventos = listaEventos.Count();
@@ -265,6 +269,7 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
             var fechaInicioValor = ObtenerFecha(fechaInicio);
             var fechaFinalValor = ObtenerFecha(fechaFinal);
             var thumbnailGUIDValor = CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty);
+            var portadaValor = fila["portada"].ToString();
             //var imagenSmallValor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "383", "216", string.Empty);
             //var imagenSmall4_3Valor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "288", "216", string.Empty);
             //var imagenHorizontal_Valor = GSIFunctions.GetGSIImageURLGUID_WithResizeCrop(CMS.GlobalHelper.ValidationHelper.GetGuid(fila["Thumbnail"].ToString(), Guid.Empty), "cms.eventotiempolibre.pl_tiempolibreevento_grande", "885", "500", string.Empty);
@@ -291,7 +296,8 @@ public object ObtenerObjetoEvento(System.Data.DataRow fila, System.Data.DataRowV
                 hoy = hoyValor,
                 promocion = promocionValor,
                 thumbnailGUID = thumbnailGUIDValor,
-                palabrasClave = palabrasClaveValor
+                palabrasClave = palabrasClaveValor,
+                portada = portadaValor
                 //imagenSmall = imagenSmallValor
                 //imagenSmall = ""
                 //imagenSmall4_3 = imagenSmall4_3Valor,
@@ -331,7 +337,8 @@ protected object ClonarObjetoEvento(dynamic entrada)
         promocion = entrada.promocion,
         thumbnailGUID = entrada.thumbnailGUID,
         palabrasClave = entrada.palabrasClave,
-        imagenSmall = imageSmallValor
+        imagenSmall = imageSmallValor,
+        portada = entrada.portada
     };
 }
                                                
