@@ -10,6 +10,7 @@ protected override void OnLoad(EventArgs e)
     Response.AddHeader("Access-Control-Allow-Origin", "http://172.22.2.135");
     //Response.AddHeader("Access-Control-Allow-Origin", "https://s3-us-west-2.amazonaws.com");
     //Response.AddHeader("Access-Control-Allow-Origin", "http://192.168.1.159");
+	//Prueba GitHub 07072021
 
     try
     {
